@@ -79,6 +79,7 @@ Route::get('/VerifyWheelProductImages', 'HomeController@VerifyWheelProductImages
 
 
 Route::get('/DropshipperImport', 'DropshipperController@DropshipperImport');
+Route::get('/DropshipperInventory_Import', 'DropshipperInventoryController@DropshipperInventory_Import');
 
 Route::get('/Vehicle_Dually_update', 'VehicleController@Vehicle_Dually_update');
 Route::get('/offroad_update', 'OffroadController@offroad_update');

@@ -528,17 +528,17 @@ function getVehicleList($columnname='',$sortorder='asc'){
             }
 
             if(isset($selectedMake) && $columnname == 'year'){
-				$data = $vehicle->select('year')->distinct('year')->wheremake($selectedMake)->orderBy('year','DESC')->pluck('year');
+				$data = $vehicle->wheremake($selectedMake)->select('year')->distinct('year')->orderBy('year','DESC')->pluck('year');
             }
 
             if(isset($selectedMake) && isset($selectedYear) && $columnname == 'model'){
-				$data = $vehicle->select('model')->distinct('model')->wheremake($selectedMake)->where('year',$selectedYear)->orderBy('model','DESC')->pluck('model');
+				$data = $vehicle->wheremake($selectedMake)->where('year',$selectedYear)->select('model')->distinct('model')->orderBy('model','DESC')->pluck('model');
             }
 
 
             if(isset($selectedMake) && isset($selectedYear) && isset($selectedModel) && $columnname == 'submodel'){
 
-				$data = $vehicle->select('submodel','body')->distinct('submodel','body')->wheremake($selectedMake)->where('year',$selectedYear)->where('model',$selectedModel)->orderBy('submodel','DESC')->pluck('submodel','body');
+				$data = $vehicle->wheremake($selectedMake)->where('year',$selectedYear)->where('model',$selectedModel)->select('submodel','body')->distinct('submodel','body')->orderBy('submodel','DESC')->pluck('submodel','body');
             }
 
             // Year change  or Loading Filter
