@@ -317,31 +317,45 @@ class TireController extends Controller
                 //         ->orderBy('inventories.available_qty', 'DESC')
                 //         ->select('tires.*')->with('Inventories'); 
 
+ 
+                // $tires = $tires->with([
+                //                     'Inventories'=>function ($query){ 
+                //                                         $query->where('available_qty','>=',4); 
+                //                                         $query->orderBy('available_qty','DESC'); 
+                //                     },
+                //                     'Inventories.Dropshippers'=>function ($query) use($zipcodes){ 
+                //                                         $query->whereIn('zip',$zipcodes); 
+                //                     }
+                //                 ])
 
+                if($is_shipped != ''){
+                    $tires =$tires->whereHas('DropshipperInventories');
+                }
+                
                 $tires = $tires->with([
-                                    'Inventories'=>function ($query){ 
-                                                        $query->where('available_qty','>=',4); 
-                                                        $query->orderBy('available_qty','DESC'); 
-                                    },
-                                    'Inventories.Dropshippers'=>function ($query) use($zipcodes){ 
-                                                        $query->whereIn('zip',$zipcodes); 
+                                    'DropshipperInventories'=>function ($query) use($zipcodes){ 
+                                                            $query->where('qty','>=',4); 
+                                                            $query->Where(function ($query1) use($zipcodes) { 
+                                                                foreach ($zipcodes as $key => $zipcode) {
+                                                                    $query1->orwhere('zip', 'like',  '%' . $zipcode.'%');
+                                                                }     
+                                                            });  
+                                                            $query->orderBy('qty','DESC'); 
                                     }
                                 ])
    
                 ->orderBy('price', 'ASC');
                  
-                if($is_shipped != ''){
-                    $tires =$tires->whereHas('Inventories')->whereHas('Inventories.Dropshippers');
-                }
 
             }else{
 
-            $tires = $tires->with([
-                                    'Inventories'=>function ($query){ 
-                                                        $query->orderBy('available_qty','DESC'); 
-                                    }
-                                ])         
-            ->orderBy('price', 'ASC');
+                $tires = $tires->with([
+                                        'DropshipperInventories'=>function ($query){ 
+                                                                $query->where('qty','>=',4);  
+                                                                $query->orderBy('qty','DESC'); 
+                                        }
+                                    ]) ->whereHas('DropshipperInventories')        
+                ->orderBy('price', 'ASC');
             }        
 
             $tires=$tires->get()->unique('prodtitle');

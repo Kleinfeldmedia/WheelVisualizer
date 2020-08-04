@@ -28,5 +28,9 @@ class WheelProduct extends Model
 	public function Inventories() {
 	    return $this->hasMany('App\Inventory','partno','partno');
 	}
+
+	public function DropshipperInventories() {
+	    return $this->hasMany('App\DropshipperInventory','partno','partno');
+	}
 	
 }

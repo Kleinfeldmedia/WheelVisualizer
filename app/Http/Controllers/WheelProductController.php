@@ -476,18 +476,31 @@ class WheelProductController extends Controller
             // dd($zipcodes);
  
  
+                // $products = $products->with([
+                //                     'Inventories'=>function ($query){ 
+                //                                         $query->select('available_qty','partno');
+                //                                         $query->where('available_qty','>=',4); 
+                //                                         $query->orderBy('available_qty','DESC'); 
+                //                     },
+                //                     'Inventories.Dropshippers'=>function ($query) use($zipcodes){
+                //                                         $query->select('zip','code'); 
+                //                                         $query->whereIn('zip',$zipcodes); 
+                //                     }
+                //                 ])    
+                // ->orderBy('price', 'ASC'); 
                 $products = $products->with([
-                                    'Inventories'=>function ($query){ 
-                                                        $query->select('available_qty','partno');
-                                                        $query->where('available_qty','>=',4); 
-                                                        $query->orderBy('available_qty','DESC'); 
-                                    },
-                                    'Inventories.Dropshippers'=>function ($query) use($zipcodes){
-                                                        $query->select('zip','code'); 
-                                                        $query->whereIn('zip',$zipcodes); 
+                                    'DropshipperInventories'=>function ($query) use($zipcodes){ 
+                                                            $query->where('qty','>=',4); 
+                                                            $query->Where(function ($query1) use($zipcodes) { 
+                                                                foreach ($zipcodes as $key => $zipcode) {
+                                                                    $query1->orwhere('zip', 'like',  '%' . $zipcode.'%');
+                                                                }     
+                                                            });  
+                                                            $query->orderBy('qty','DESC'); 
                                     }
-                                ])    
-                ->orderBy('price', 'ASC');  
+                                ])
+   
+                ->orderBy('price', 'ASC');
                 // $radius_products = collect([9,7,8,2,4,6]);
                 // rsort($radius_products);
                 // $products = collect([1,2,3,4,5,6]);
@@ -509,15 +522,14 @@ class WheelProductController extends Controller
 
 
                 $products = $products->with([
-                                        'Inventories'=>function ($query){ 
-                                                            $query->select('available_qty','partno');
-                                                            $query->where('available_qty','>=',4); 
-                                                            $query->orderBy('available_qty','DESC'); 
-                                        }
-                                    ])      
+                                     'DropshipperInventories'=>function ($query) use($zipcodes){ 
+                                                            $query->where('qty','>=',4); 
+                                                            $query->orderBy('qty','DESC'); 
+                                    }
+                                ])
                 ->orderBy('price', 'ASC');
             }                       
- 
+        
             // $products= collect([]);//
             $products = $products->get()->unique('prodtitle'); 
             // if($zipcode != null){
