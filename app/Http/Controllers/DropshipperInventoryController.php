@@ -92,15 +92,15 @@ class DropshipperInventoryController extends Controller
         // $fw = fopen($out_file, "w");
         while( ($data = fgetcsv($fr, 1000, ",")) !== FALSE ) {
                 $dropinv = new DropshipperInventory; 
-                $dropinv->fetcher = $data[0];
-                $dropinv->location_name = $data[1];
-                $dropinv->dropshipper_id = $data[2];
-                $dropinv->partno = $data[3];
-                $dropinv->vendor_partno = $data[4];
-                $dropinv->qty = $data[5];
-                $dropinv->price = $data[6];
-                $dropinv->fetch_date = $data[7];
-                $dropinv->zip = $data[8];
+                $dropinv->fetcher = in_array($data[0], ['NULL',''])?null:$data[0] ;
+                $dropinv->location_name = in_array($data[1], ['NULL',''])?null:$data[1] ;
+                $dropinv->dropshipper_id = in_array($data[2], ['NULL',''])?null:$data[2] ;
+                $dropinv->partno = in_array($data[3], ['NULL',''])?null:$data[3] ;
+                $dropinv->vendor_partno = in_array($data[4], ['NULL',''])?null:$data[4] ;
+                $dropinv->qty = in_array($data[5], ['NULL',''])?null:$data[5] ;
+                $dropinv->price = in_array($data[6], ['NULL',''])?null:$data[6] ;
+                $dropinv->fetch_date = in_array($data[7], ['NULL',''])?null:$data[7] ;
+                $dropinv->zip = in_array($data[8], ['NULL',''])?null:$data[8] ;
                 $dropinv->save(); 
             }
         fclose($fr);
