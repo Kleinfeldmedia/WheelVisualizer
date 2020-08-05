@@ -345,9 +345,9 @@ function getMakeList(){
 function getTireList($columnname=''){
 		if($columnname){ 
 			//width=305&profile=55&diameter=20
-			$selectedwidth = Session::get('user.searchByTireSize')['width'];
-			$selectedprofile = Session::get('user.searchByTireSize')['profile'];
-			$selecteddiameter = Session::get('user.searchByTireSize')['diameter']; 
+			$selectedwidth = Session::get('user.searchByTireSize')['width']??null;
+			$selectedprofile = Session::get('user.searchByTireSize')['profile']??null;
+			$selecteddiameter = Session::get('user.searchByTireSize')['diameter']??null; 
 
             $tires = new Tire;  
 
@@ -399,11 +399,11 @@ function getTireBrandList(){
 // -------------> Shop By Size 
 function getWheelList($columnname=''){
 		if($columnname){ 
-			$selectedwheeldiameter = Session::get('user.searchByWheelSize')['wheeldiameter'];
-			$selectedwheelwidth = Session::get('user.searchByWheelSize')['wheelwidth'];
-			$selectedboltpattern = Session::get('user.searchByWheelSize')['boltpattern'];
-			$selectedminoffset = Session::get('user.searchByWheelSize')['minoffset'];
-			$selectedmaxoffset = Session::get('user.searchByWheelSize')['maxoffset'];
+			$selectedwheeldiameter = Session::get('user.searchByWheelSize')['wheeldiameter']??null;
+			$selectedwheelwidth = Session::get('user.searchByWheelSize')['wheelwidth']??null;
+			$selectedboltpattern = Session::get('user.searchByWheelSize')['boltpattern']??null;
+			$selectedminoffset = Session::get('user.searchByWheelSize')['minoffset']??null;
+			$selectedmaxoffset = Session::get('user.searchByWheelSize')['maxoffset']??null;
 
             $products = new WheelProduct;  
 
