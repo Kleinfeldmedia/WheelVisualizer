@@ -522,7 +522,7 @@ class WheelProductController extends Controller
 
 
                 $products = $products->with([
-                                     'DropshipperInventories'=>function ($query) use($zipcodes){ 
+                                     'DropshipperInventories'=>function ($query){ 
                                                             $query->where('qty','>=',4); 
                                                             $query->orderBy('qty','DESC'); 
                                     }
