@@ -376,6 +376,7 @@
         $.ajax({url: "/runPython",data:{'image':imagePath,'carid':carid}, 
             success: function(result){
                 // console.log(typeof result)
+                console.log('result',result);
                 console.log('After Response',new Date($.now()))
                 boxes = JSON.parse(result.toString())
                 console.log('Response Binded ')   
