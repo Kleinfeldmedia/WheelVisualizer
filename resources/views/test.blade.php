@@ -190,13 +190,13 @@
                                                 <li class="color-radius car_color " style="background:#112145;" title="Scuba Blue Metallic/Black Roof" data-code="S9PA" data-vif="9818"></li>
                                                 <li class="color-radius car_color " style="background:#484336;" title="Dakota Gray Metallic/Black Roof" data-code="Y7PA" data-vif="9818"></li>
                                              </ul>
-                                          </div>
+                                          </div> -->
                                           <div class="col-sm-4">
                                              <h1 class="model-car">Wheel Diameter</h1>
                                              <button class="model-button diameter-up" data-id="0">Zoom In</button>
                                              <button class="model-button diameter-down" data-id="0">Zoom Out</button>
                                           </div>
-                                          <div class="col-sm-4">
+                                         <!--  <div class="col-sm-4">
                                              <h1 class="model-car">Share :</h1>
                                              <ul class="model-list-unstyled">
                                                 <li class="facebook">
@@ -219,8 +219,8 @@
                                                    <i aria-hidden="true" class="fa fa-pinterest-p"></i>
                                                    </a>
                                                 </li>
-                                             </ul> -->
-                                          </div>
+                                             </ul>
+                                          </div> -->
                                        </div>
                                     </div>
                                  </div>
@@ -247,10 +247,17 @@
          var allData;
          var widthAdjusted=true;
          var $loading = $('.se-pre-con');
-         getWheelPosition();
          $(document).ready(function(){
-            // getWheelPosition();
-                     $loading.fadeOut("slow");
+                     getWheelPosition();
+                     var delay = 1000;
+                      setTimeout(function() 
+                          {  
+                          $loading.fadeOut("slow");
+                          console.log('Waiting Time Closed')    
+                          },
+                          delay
+                      ) ;  
+                  // $loading.fadeOut("slow"); 
          });
          function getWheelPosition(key){   
             var data={
@@ -282,7 +289,8 @@
 
                      allData = result['data']; 
                   
-                     console.log(allData);
+                          $loading.fadeOut("slow");
+                     // console.log(allData);
                      // WheelMapping();  
                       // console.log('Response Binded ')   
                       // var delay = 1000;
@@ -295,6 +303,7 @@
                       // ) ;    
                    }else{
 
+                          $loading.fadeOut("slow");
                      alert(result['message']);
                      DisableModal();
                    }
