@@ -139,7 +139,7 @@
                                           <div class="caption">
                                              <!-- <h4><a href="http://web6.vtdns.net/wheels?brand=WyJLb2tvIl0="> <br> Diameter : 18 </a></h4> -->
                                              <br>
-                                             <button class="btn btn-primary " data-toggle=modal data-target="#myModal0" onclick="getWheelPosition('0')" >Show Wheel on Vehicle</button>
+                                             <button id="WheelMapButton" class="btn btn-primary " data-toggle=modal data-target="#myModal0" onclick="WheelMapping('0')" >Show Wheel on Vehicle</button>
                                           </div>
                                        </div>
                                     </div>
@@ -244,10 +244,12 @@
       <script src="http://web6.vtdns.net/js/ajax/jquery.min.js"></script> 
       <script type="text/javascript">
          var boxes;
+         var allData;
          var widthAdjusted=true;
          var $loading = $('.se-pre-con');
-         
+         getWheelPosition();
          $(document).ready(function(){
+            // getWheelPosition();
                      $loading.fadeOut("slow");
          });
          function getWheelPosition(key){   
@@ -278,32 +280,29 @@
 
                   if(result['status'] == true){
 
-                     var data = result['data']; 
+                     allData = result['data']; 
                   
-                     console.log(data);
-                     boxes =  data['position'];
-                     $('#car_image').attr('src',data['carimage']);
-                     $('#image-diameter-front').attr('src',data['frontimage']);
-                     $('#image-diameter-back').attr('src',data['frontimage']);
-                     $('#myModalLabel').html(data['vehicle']);
-                     WheelMapping();  
-                      console.log('Response Binded ')   
-                      var delay = 1000;
-                      setTimeout(function() 
-                          {  
-                          $loading.fadeOut("slow");
-                          console.log('Waiting Time Closed')    
-                          },
-                          delay
-                      ) ;    
+                     console.log(allData);
+                     // WheelMapping();  
+                      // console.log('Response Binded ')   
+                      // var delay = 1000;
+                      // setTimeout(function() 
+                      //     {  
+                      //     $loading.fadeOut("slow");
+                      //     console.log('Waiting Time Closed')    
+                      //     },
+                      //     delay
+                      // ) ;    
                    }else{
 
                      alert(result['message']);
+                     DisableModal();
                    }
                  },
                  error:function(jqXHR,textStatus,errorThrown)
                  {
                      alert('Something Went Wrong!')
+                     DisableModal();
 
 
                           $loading.fadeOut("slow");
@@ -313,9 +312,17 @@
          
           
          }
-         
+         function DisableModal(key=''){ 
+            $('#WheelMapButton').attr('disabled',true);
+         }
          function WheelMapping(key=''){ 
            
+                     boxes =  allData['position'];
+                     $('#car_image').attr('src',allData['carimage']);
+                     $('#image-diameter-front').attr('src',allData['frontimage']);
+                     $('#image-diameter-back').attr('src',allData['frontimage']);
+                     $('#myModalLabel').html(allData['vehicle']);
+
              if(boxes[0][0] < 400 ){
          
                  f = boxes[0];
