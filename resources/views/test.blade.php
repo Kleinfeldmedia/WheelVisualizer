@@ -81,7 +81,7 @@
 
     <!-- Scrits for Visualiser API -->
     <script type="text/javascript"> 
-            var accesstoken= "{{$request->accesstoken?:'Ykc5allXeG9iM04w'}}"
+            var accesstoken= "{{$request->accesstoken?:'ZDJWaU5pNTJkR1J1Y3k1dVpYUT0='}}"
     </script>
     <!-- Javascript Start --> 
     <script src="http://web9.vtdns.net/js/jquery-2.1.1.min.js"></script>
