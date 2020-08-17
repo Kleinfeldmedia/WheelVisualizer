@@ -148,45 +148,37 @@
                                                     <form action="{{url('/setFiltersByProductVehicle')}}"  id="WheelVehicleSearch">
                                                         <input type="hidden" name="flag" value="searchByVehicle">
                                                         <div class="dropdown">
-                                                            <select required="" class="form-control browser-default custom-select WheelNavMake" name="make">
+                                                            <select required="" class="form-control browser-default custom-select make" name="make">
                                                                 <option value="">Select Make</option>
-                                                                @foreach(getVehicleList('make') as $key => $make)
-                                                                <option value="{{$make}}" {{(@\Session::get('user.searchByVehicle')['make'] == $make)?'selected':''}}>{{$make}}</option>
-                                                                @endforeach
+                                                                
                                                             </select>
                                                         </div>
 
                                                         <div class="dropdown">
-                                                            <select required="" class="form-control browser-default custom-select WheelNavYear" name="year">
+                                                            <select required="" class="form-control browser-default custom-select year" name="year">
                                                                 <option value="">Select Year</option>
-                                                                @foreach(getVehicleList('year','desc') as $key => $year)
-                                                                <option value="{{$year}}" {{(@\Session::get('user.searchByVehicle')['year'] == $year)?'selected':''}}>{{$year}}</option>
-                                                                @endforeach
+                                                              
                                                             </select>
                                                         </div>
 
                                                         <div class="dropdown">
-                                                            <select required="" class="form-control browser-default custom-select WheelNavModel" name="model">
+                                                            <select required="" class="form-control browser-default custom-select model" name="model">
                                                                 <option value="">Select Model</option>
-                                                                @foreach(getVehicleList('model') as $key => $model)
-                                                                <option value="{{$model}}" {{(@\Session::get('user.searchByVehicle')['model'] == $model)?'selected':''}}>{{$model}}</option>
-                                                                @endforeach
+                                                                
                                                             </select>
                                                         </div>
 
                                                         <div class="dropdown">
-                                                            <select required="" class="form-control browser-default custom-select WheelNavSubmodel" name="submodel">
+                                                            <select required="" class="form-control browser-default custom-select submodel" name="submodel">
                                                                 <option value="">Select Trim</option>
-                                                                @foreach(getVehicleList('submodel') as $key => $submodel) 
-                                                                <option value="{{$submodel."-".$key}}" {{(@\Session::get('user.searchByVehicle')['submodel'] == $submodel."-".$key)?'selected':''}}>{{$submodel."-".$key}}</option>
-                                                                @endforeach
+                                                                
                                                             </select>
                                                         </div>
                                                <!--          <div class="dropdown">
                                                             <input required="" type="text" class="form-control" name="zip" placeholder="Enter ZIP">
                                                         </div> -->
                                                         <!-- <a href="" disabled> -->
-                                                            <button type="button" class="btn vehicle-go WheelVehicleSubmit">GO</button>
+                                                            <button type="button" class="btn vehicle-go SearchByVehicleGo ">GO</button>
                                                         <!-- </a> -->
                                                     </form>
                                                 </div>

@@ -86,7 +86,7 @@
     <!-- Javascript Start --> 
     <script src="http://web9.vtdns.net/js/jquery-2.1.1.min.js"></script>
     <script src="http://web9.vtdns.net/js/bootstrap.min.js"></script>
-    <script src="http://web9.vtdns.net/js/wheel-api.js"></script> 
+    <script src="http://localhost:8001/js/wheel-api.js"></script> 
 </body>
 
 </html>

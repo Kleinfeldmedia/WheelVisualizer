@@ -155,6 +155,7 @@ Route::get('/tires_update', 'TireController@tires_update')->name('tires_update')
 
 
 // Wheel Product Module Routes
+Route::get('/products', 'WheelProductController@products')->name('products');
 Route::get('/wheelproducts', 'WheelProductController@index')->name('wheelproducts');
 // Route::get('/tirelist/{chassis_model_id?}/{vehicle_id?}', 'TireController@list')->name('tirelist');
 

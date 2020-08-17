@@ -26,6 +26,11 @@ class WheelProductController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+    public function products(Request $request)
+    {
+        return view('products-list',compact('request'));
+
+    }
     public function findVehicle($data){
                 $vehicle = Vehicle::with('Plussizes','ChassisModels','Offroads')->select('vehicle_id','vif', 'year', 'make', 'model', 'submodel', 'dr_chassis_id', 'dr_model_id', 'year_make_model_submodel', 'sort_by_vehicle_type','wheel_type','rf_lc','offroad','dually')->where('year', $data->year)
                     ->where('make', $data->make)

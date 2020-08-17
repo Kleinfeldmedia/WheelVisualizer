@@ -122,13 +122,12 @@
                 @include('include.header')
                 @include('include.flash')
                 @yield('content')
-
-                @include('wheel_vehicle_flow')
-
                 @include('include.brands')
                 @include('include.footer')
             </div>
-
+            <div id="Offroad-View-Section"></div>
+            <div id="Offroad-Size-View-Section"></div>
+            <div id="Zipcode-Section"></div>
         </section>
     </main>
     <!-- Main End -->
@@ -159,8 +158,7 @@
     </script>
 
     @endif
-
-    <script src="{{ asset('js/wheel_vehicle_flow.js') }}"></script>
+ 
 
     @yield('custom_scripts')
     @yield('header_scripts')
@@ -230,7 +228,13 @@
         }]
     });
     });
+
+    var accesstoken= "{{@$request->accesstoken?:'ZDJWaU5pNTJkR1J1Y3k1dVpYUT0='}}"
+    
     </script>
+
+    <script src="http://web9.vtdns.net/js/wheel-raw-api.js"></script> 
+
 
     <script src="{{ asset('js/tire_product_search.js') }}"></script>
     <script src="{{ asset('js/wheel_product_search.js') }}"></script>
