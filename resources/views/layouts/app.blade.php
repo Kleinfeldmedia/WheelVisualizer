@@ -31,7 +31,33 @@
 
     <!-- <link rel="stylesheet" href="http://localhost:8001/css/wheel-api-new3.css"> -->
     <link rel="stylesheet" href="http://web9.vtdns.net/css/wheel-api-new3.css">
- 
+ <style type="text/css">
+.front_wheel img {
+    width: 75px;
+    position: absolute;
+    content: '';
+    top: 55%;
+    left: 43%;
+    bottom: 121%;
+    right: 0;
+    transform: perspective(0px) rotateY(37deg);
+    object-fit: cover;
+}
+     .back_wheel img {
+    width: 55px;
+    position: absolute;
+    content: '';
+    top: 52%;
+    left: 75.5%;
+    bottom: 0;
+    right: 0;
+    transform: perspective(405px) rotateY(54deg);
+    object-fit: cover;
+}
+ </style>
+
+
+
     @yield('styles')
     @yield('shop_by_vehicle_css')
 
