@@ -323,8 +323,10 @@ class HomeController extends Controller
     public function vehicledetails(Request $request)
     { 
         try{
-            $viflist = new Viflist; 
 
+            // dd($request->all())
+            $viflist = new Viflist; 
+            $data=[];
             // Make change or Loading filter
             if(isset($request->make) && $request->changeBy == 'make' || $request->changeBy == '')
                 $allData['year'] = $data = $viflist->select('yr')->distinct('yr')->wheremake($request->make)->orderBy('yr','DESC')->get();

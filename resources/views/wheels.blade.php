@@ -54,7 +54,7 @@
                                     <div class="menu-category-" style="display: block;">
                                         <ul class="dropmenu">
                                             <li class="OT-Sub-List dropdown">
-                                                <select class="form-control chosen-select Make" name="make">
+                                                <select class="form-control chosen-select VMake" name="make">
                                                     <option disabled selected>Select Make</option>
 
                                                     @foreach(getMakeList() as $make)
@@ -65,7 +65,7 @@
                                                 </select>
                                             </li>
                                            <li class="OT-Sub-List dropdown">
-                                                <select class="form-control chosen-select Year" name="year">
+                                                <select class="form-control chosen-select VYear" name="year">
                                                     <option value="" disabled selected>Select Year</option>
                                                     @if(@$car_images->CarViflist)
                                                     <option value="{{@$car_images->CarViflist->yr}}" selected="">{{@$car_images->CarViflist->yr}}</option>
@@ -73,7 +73,7 @@
                                                 </select>
                                             </li>
                                             <li class="OT-Sub-List dropdown">
-                                                <select class="form-control chosen-select Model" name="model">
+                                                <select class="form-control chosen-select VModel" name="model">
                                                     <option disabled selected>Select Model</option>
                                                     @if(@$car_images->CarViflist)
                                                     <option value="{{@$car_images->CarViflist->model}}" selected="">{{@$car_images->CarViflist->model}}</option>
@@ -82,7 +82,7 @@
                                             </li>
 
                                             <li class="OT-Sub-List dropdown">
-                                                <select class="form-control chosen-select DriveBody" name="drivebody">
+                                                <select class="form-control chosen-select VDriveBody" name="drivebody">
                                                     <option disabled selected>Select Drive/Body</option>
                                                     @if(@$car_images->CarViflist)
                                                     <option value="{{@$car_images->CarViflist->vif}}" selected="">{{@$car_images->CarViflist->whls}} {{@$car_images->CarViflist->drs}} {{@$car_images->CarViflist->body}}</option>
@@ -90,7 +90,7 @@
                                                 </select>
                                             </li>
                                             {{--<li class="OT-Sub-List dropdown">
-                                                <select class="form-control chosen-select SubModel" name="subodel">
+                                                <select class="form-control chosen-select VSubModel" name="subodel">
                                                     <option disabled selected>Select Sub Model</option>
                                                 </select>
                                             </li>
