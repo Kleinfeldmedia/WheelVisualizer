@@ -29,8 +29,8 @@
     <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}">
     <link rel="stylesheet" href="{{ asset('css/zoomple.css') }}">
 
-    <!-- <link rel="stylesheet" href="http://localhost:8001/css/wheel-api-new11.css"> -->
-    <link rel="stylesheet" href="http://web9.vtdns.net/css/wheel-api-new11.css"> 
+    <!-- <link rel="stylesheet" href="http://localhost:8001/css/wheel-api-new12.css"> -->
+    <link rel="stylesheet" href="http://web9.vtdns.net/css/wheel-api-new12.css"> 
 
 
 
@@ -234,14 +234,14 @@
     });
     });
 
-    // var accesstoken= "{{@$request->accesstoken?:'Ykc5allXeG9iM04w'}}"//new11
-    var accesstoken= "{{@$request->accesstoken?:'ZDJWaU5pNTJkR1J1Y3k1dVpYUT0='}}"//new11
+    // var accesstoken= "{{@$request->accesstoken?:'Ykc5allXeG9iM04w'}}"//new12
+    var accesstoken= "{{@$request->accesstoken?:'ZDJWaU5pNTJkR1J1Y3k1dVpYUT0='}}"//new12
     // Ykc5allXeG9iM04w
     // ZDJWaU5pNTJkR1J1Y3k1dVpYUT0=
     </script>
 
-    <!-- <script src="http://localhost:8001/js/wheel-api-new11.js"></script>  -->
-    <script src="http://web9.vtdns.net/js/wheel-api-new11.js"></script> 
+    <!-- <script src="http://localhost:8001/js/wheel-api-new12.js"></script>  -->
+    <script src="http://web9.vtdns.net/js/wheel-api-new12.js"></script> 
 
 
 
