@@ -30,7 +30,7 @@
     <link rel="stylesheet" href="{{ asset('css/zoomple.css') }}">
 
     <!-- <link rel="stylesheet" href="http://localhost:8001/css/wheel-api.css"> -->
-    <link rel="stylesheet" href="http://web9.vtdns.net/css/wheel-api-new.css">
+    <link rel="stylesheet" href="http://web9.vtdns.net/css/wheel-api-new1.css">
  
     @yield('styles')
     @yield('shop_by_vehicle_css')
@@ -237,7 +237,7 @@
     </script>
 
     <!-- <script src="http://localhost:8001/js/wheel-updated-api.js"></script>  -->
-    <script src="http://web9.vtdns.net/js/wheel-api-new.js"></script> 
+    <script src="http://web9.vtdns.net/js/wheel-api-new1.js"></script> 
 
 
     <script src="{{ asset('js/tire_product_search.js') }}"></script>
