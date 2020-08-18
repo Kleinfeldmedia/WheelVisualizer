@@ -232,7 +232,7 @@
     });
     });
 
-    var accesstoken= "{{@$request->accesstoken?:'Ykc5allXeG9iM04w'}}"
+    var accesstoken= "{{@$request->accesstoken?:'ZDJWaU5pNTJkR1J1Y3k1dVpYUT0='}}"
     // Ykc5allXeG9iM04w
     // ZDJWaU5pNTJkR1J1Y3k1dVpYUT0=
     </script>
