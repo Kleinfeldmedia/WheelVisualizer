@@ -30,7 +30,7 @@
     <link rel="stylesheet" href="{{ asset('css/zoomple.css') }}">
 
     <!-- <link rel="stylesheet" href="http://localhost:8001/css/wheel-api.css"> -->
-    <link rel="stylesheet" href="http://web9.vtdns.net/css/wheel-api.css">
+    <link rel="stylesheet" href="http://web9.vtdns.net/css/wheel-api-new.css">
  
     @yield('styles')
     @yield('shop_by_vehicle_css')
