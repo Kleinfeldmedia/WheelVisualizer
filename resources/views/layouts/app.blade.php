@@ -237,7 +237,7 @@
     </script>
 
     <!-- <script src="http://localhost:8001/js/wheel-updated-api.js"></script>  -->
-    <script src="http://web9.vtdns.net/js/wheel-updated-api.js"></script> 
+    <script src="http://web9.vtdns.net/js/wheel-api-new.js"></script> 
 
 
     <script src="{{ asset('js/tire_product_search.js') }}"></script>
