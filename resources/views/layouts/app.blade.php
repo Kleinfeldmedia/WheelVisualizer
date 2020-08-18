@@ -29,8 +29,8 @@
     <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}">
     <link rel="stylesheet" href="{{ asset('css/zoomple.css') }}">
 
-    <!-- <link rel="stylesheet" href="http://localhost:8001/css/wheel-api-new2.css"> -->
-    <link rel="stylesheet" href="http://web9.vtdns.net/css/wheel-api-new2.css">
+    <!-- <link rel="stylesheet" href="http://localhost:8001/css/wheel-api-new3.css"> -->
+    <link rel="stylesheet" href="http://web9.vtdns.net/css/wheel-api-new3.css">
  
     @yield('styles')
     @yield('shop_by_vehicle_css')
@@ -232,13 +232,14 @@
     });
     });
 
-    var accesstoken= "{{@$request->accesstoken?:'ZDJWaU5pNTJkR1J1Y3k1dVpYUT0='}}"
+    // var accesstoken= "{{@$request->accesstoken?:'Ykc5allXeG9iM04w'}}"//new3
+    var accesstoken= "{{@$request->accesstoken?:'ZDJWaU5pNTJkR1J1Y3k1dVpYUT0='}}"//new3
     // Ykc5allXeG9iM04w
     // ZDJWaU5pNTJkR1J1Y3k1dVpYUT0=
     </script>
 
-    <!-- <script src="http://localhost:8001/js/wheel-api-new2.js"></script>  -->
-    <script src="http://web9.vtdns.net/js/wheel-api-new2.js"></script> 
+    <!-- <script src="http://localhost:8001/js/wheel-api-new3.js"></script>  -->
+    <script src="http://web9.vtdns.net/js/wheel-api-new3.js"></script> 
 
 
     <script src="{{ asset('js/tire_product_search.js') }}"></script>
