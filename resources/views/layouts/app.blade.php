@@ -20,7 +20,7 @@
      <link rel="stylesheet" href="{{ asset('css/swiper.css') }}">
      <link rel="stylesheet" href="{{ asset('css/swiper.min.css') }}">
      <link rel="stylesheet" href="{{ asset('css/owl.carousel.css') }}">
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.css">
+     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.css"> -->
      <link rel="stylesheet" href="{{ asset('js/jquery/magnific/magnific-popup.css') }}">
      <link rel="stylesheet" href="{{ asset('js/jquery/datetimepicker/bootstrap-datetimepicker.min.css') }}">
      <link rel="stylesheet" href="{{ asset('js/font-awesome/css/font-awesome.min.css') }}">
@@ -203,8 +203,9 @@
          }
      </script>
      <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.js"></script> -->
-     <script>
-         $(document).ready(function() {
+     
+<!--      <script type="text/javascript">
+          $(document).ready(function() {
              $('.customer-logos').slick({
                  slidesToShow: 6,
                  slidesToScroll: 1,
@@ -226,7 +227,8 @@
                  }]
              });
          });
-
+     </script> -->
+     <script>
          // var accesstoken= "{{@$request->accesstoken?:'Ykc5allXeG9iM04w'}}"//new18
          var accesstoken = "{{@$request->accesstoken?:'ZDJWaU5pNTJkR1J1Y3k1dVpYUT0='}}" //new18
          // Ykc5allXeG9iM04w

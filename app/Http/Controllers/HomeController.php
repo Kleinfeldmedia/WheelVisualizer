@@ -48,7 +48,21 @@ class HomeController extends Controller
         $years = Viflist::select('yr')->distinct('yr')->orderBy('yr','Desc')->limit(10)->get(); 
 
         return view('home',compact('Wheels','years','Tires'));
+    }    
+
+    public function notfound()
+    {  
+
+        return view('errors.404'); 
     }
+
+    public function demo_visualiser(Request $request)
+    {  
+
+        return view('test',compact('request')); 
+    }
+    
+
     public function search(Request $request)
     {  
             

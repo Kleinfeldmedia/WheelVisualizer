@@ -224,13 +224,12 @@ Route::post('/addStarRating', 'HomeController@addStarRating')->name('addStarRati
 
 
 
-Route::get('/InventoryCommand',function(){
-        \Artisan::call('autoupdate:inventories');
-});
+// Route::get('/InventoryCommand',function(){
+//         \Artisan::call('autoupdate:inventories');
+// });
 
-Route::get('/404',function(){
-        return view('errors.404');
-});
+Route::get('/404', 'HomeController@notfound')->name('notfound');
+Route::get('/test', 'HomeController@demo_visualiser')->name('demo_visualiser');
 
  
 Route::group(['prefix' => 'admin'], function () {
@@ -246,19 +245,6 @@ Route::group(['prefix' => 'admin'], function () {
   Route::get('/password/reset', 'AdminAuth\ForgotPasswordController@showLinkRequestForm')->name('admin.password.reset');
   Route::get('/password/reset/{token}', 'AdminAuth\ResetPasswordController@showResetForm');
 });
-
-
-Route::get('/test',function(Request $request){
-              // $params=[];
-              // dd($request->all());
-              //  $params['year']= $request->year?$request->year:'2015';
-              //  $params['make']= $request->make?$request->make:'Volvo';
-              //  $params['model']= $request->model?$request->model:'S60';
-              //  $params['submodel']= $request->submodel?$request->submodel:'T6 Polestar-4 Dr Sedan';
-              //  $params['wheelpartno']= $request->wheelpartno?$request->wheelpartno:'2610Z20KOSAGB';
-              //  $params['accesstoken']= $request->accesstoken?$request->accesstoken:'Ykc5allXeG9iM04w';
-              //  dd($params);
-        return view('test',compact('request'));
-});
+ 
 
 

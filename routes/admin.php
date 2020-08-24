@@ -1,19 +1,10 @@
 <?php
 
-Route::get('/home', function () { 
-    $users[] = Auth::guard()->user();
-    $users[] = Auth::guard('admin')->user();
+ 
 
-    // dd($users);
-
-    return view('admin.home');
-})->name('home');
-
-
-
-Route::get('/', function () {
-    return view('admin.home');
-})->name('home');
+Route::get('/', 'AdminController@home');
+Route::get('home', 'AdminController@home');
+ 
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 Route::get('inventories/count', 'InventoryController@getUploadInventories');
