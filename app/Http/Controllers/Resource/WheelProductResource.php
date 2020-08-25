@@ -20,8 +20,8 @@ class WheelProductResource extends Controller
 
         $selectFields=['id','prodbrand', 'prodmodel', 'prodimage', 'wheeldiameter', 'wheelwidth', 'prodtitle','detailtitle', 'prodfinish', 'proddesc'];
 
-        $wheelproducts = WheelProduct::get($selectFields)->unique('prodmodel');
-        // dd($tires);
+        $wheelproducts = WheelProduct::select($selectFields)->get()->unique('prodmodel');
+        
         $wheelproducts = MakeCustomPaginator($wheelproducts, $request, 5);
         return view('admin.wheelproduct.index',compact('wheelproducts'));
     }
