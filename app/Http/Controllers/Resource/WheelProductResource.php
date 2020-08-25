@@ -8,6 +8,8 @@ use App\WheelProduct;
 use Exception;
 use Illuminate\Support\Facades\Storage;
 
+use Illuminate\Pagination\LengthAwarePaginator as Paginator;
+
 class WheelProductResource extends Controller
 {
     /**
@@ -20,9 +22,9 @@ class WheelProductResource extends Controller
 
         $selectFields=['id','prodbrand', 'prodmodel', 'prodimage', 'wheeldiameter', 'wheelwidth', 'prodtitle','detailtitle', 'prodfinish', 'proddesc'];
 
-        $wheelproducts = WheelProduct::select($selectFields)->get()->unique('prodmodel');
-        
-        $wheelproducts = MakeCustomPaginator($wheelproducts, $request, 5);
+        $productlist = WheelProduct::select($selectFields)->get()->unique('prodmodel');
+
+        $wheelproducts = MakeCustomPaginator($productlist, $request, 5);
         return view('admin.wheelproduct.index',compact('wheelproducts'));
     }
 

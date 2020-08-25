@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Wheel;
 use Exception;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 
 class WheelResource extends Controller
 {
