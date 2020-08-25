@@ -880,8 +880,12 @@ function getReviewRatings($partno,$ratingValue,$category){
 function getStates($code='US'){
 
 	$country = Country::where('code',$code)->first();
-	$states = State::where('country_id',$country->id)->get();
-	 
+	if($country != null){
+		$states = State::where('country_id',$country->id)->get();
+	}else{
+		$states = State::get();
+	}
+	
 	return $states;
 }
 

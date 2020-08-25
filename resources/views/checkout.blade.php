@@ -656,7 +656,7 @@
                               <select required="" class="form-control browser-default custom-select CheckoutMake" name="make">
                                   <option value="">Select Make</option>
                                   @foreach(getVehicleList('make') as $key => $make)
-                                  <option value="{{$make}}" {{(\Session::get('user.searchByVehicle')['make'] == $make)?'selected':''}} >{{$make}}</option>
+                                  <option value="{{$make}}" {{(@\Session::get('user.searchByVehicle')['make'] == $make)?'selected':''}} >{{$make}}</option>
                                   @endforeach
                               </select>
                             </div>
