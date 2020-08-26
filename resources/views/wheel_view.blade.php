@@ -357,6 +357,10 @@
     }
 
 </style>
+ 
+<link rel="stylesheet" href="{{ asset('css/preview-image.css') }}">
+
+
 </section>
 <section id="tires-des">
     <!-- Cart Start -->
@@ -426,13 +430,24 @@
                 <div class="pTopCell HotDeals">Hot Deals Save 30%-75%</div>
                 <div class="pTopCell Phone"><a href="tel:1-800-901-6003" title="Telephone 1-800-901-6003">1-800-901-6003</a></div>
             </div>
+
+
+<!-- The PreviewModal -->
+<div id="preview-modal" class="preview-modal">
+  <span class="preview-close">&times;</span>
+  <img class="preview-modal-content" id="preview-modal-img">
+  <div id="preview-caption"></div>
+</div>
+
+
+
             <div class="row">
 
                 <div class="col-sm-3 wheel-img">
                     <div class="wheel-des">
-                        <a href="{{ViewWheelProductImage(@$wheel->prodimage)}}" class="zoomple">
-                            <img class="wheelImage" src="{{ViewWheelProductImage(@$wheel->prodimage)}}" title="{{@$wheel->prodbrand}}" alt="{{@$wheel->prodbrand}}">
-                        </a>
+                        <div href="{{ViewWheelProductImage(@$wheel->prodimage)}}" class="zoomple">
+                            <img id="preview-image" class="wheelImageNew" src="{{ViewWheelProductImage(@$wheel->prodimage)}}" title="{{@$wheel->prodbrand}}" alt="{{@$wheel->detailtitle}}">
+                        </div>
                         <h1>Lip Size Information</h1>
                         <img src="{{url('image/wheel-brand.png')}}" class="wheel-brand-img">
                     </div>
@@ -1162,8 +1177,8 @@
                 <div class="product-layouts wheel-pro">
                     <div class="product-thumb transition">
                         <div class="image">
-                            <img class="wheelImage  image_thumb" src="{{ViewWheelProductImage($product->prodimage)}}" title="{{$product->prodbrand}}" alt="{{$product->prodbrand}}">
-                            <img class="wheelImage  image_thumb_swap" src="{{ViewWheelProductImage($product->prodimage)}}" title="{{$product->prodbrand}}" alt="{{$product->prodbrand}}">
+                            <img class="wheelImage1  image_thumb" src="{{ViewWheelProductImage($product->prodimage)}}" title="{{$product->prodbrand}}" alt="{{$product->prodbrand}}">
+                            <img class="wheelImage1  image_thumb_swap" src="{{ViewWheelProductImage($product->prodimage)}}" title="{{$product->prodbrand}}" alt="{{$product->prodbrand}}">
                             <div class="sale-icon"><a>Sale</a></div>
                         </div>
 
@@ -1260,22 +1275,30 @@
     });
     $(function() {
         // $(".zoomple>img").popImg();
+        $('.zoomple').zoomple({
+            offset: {
+                x: -150,
+                y: -150
+            },
+            zoomWidth: 300,
+            zoomHeight: 300,
+            roundedCorners: true,
+            delay: 15
+        });
+
     })
 </script>
 <script type="text/javascript">
     // $(function() {
-    $('.zoomple').zoomple({
-        offset: {
-            x: -150,
-            y: -150
-        },
-        zoomWidth: 300,
-        zoomHeight: 300,
-        roundedCorners: true,
-        delay: 5
-    });
+    
 
     // })
+
+
+    $(document).on('click', '#zoomple_image_overlay', function() {
+
+        $('.wheelImageNew').trigger( "click" ); 
+    });
 </script>
 
 
@@ -1448,4 +1471,8 @@ function blink()
     $('.matching-tire').attr('style','color:'+col+';background-color: yellow !important;font-size:'+size+'px');
 }
 </script>
+
+
+
+     <script src="{{ asset('js/preview-image.js') }}"></script>
 @endsection

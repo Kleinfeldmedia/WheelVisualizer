@@ -600,8 +600,10 @@
             width: 0;
         }
     }
-</style>
-</section>
+</style> 
+
+<link rel="stylesheet" href="{{ asset('css/preview-image.css') }}">
+
 <section id="tires-des">
 
 
@@ -631,6 +633,12 @@
                 <div class="pTopCell HotDeals">Hot Deals Save 30%-75%</div>
                 <div class="pTopCell Phone"><a href="tel:1-800-901-6003" title="Telephone 1-800-901-6003">1-800-901-6003</a></div>
             </div>
+            <!-- The PreviewModal -->
+            <div id="preview-modal" class="preview-modal">
+              <span class="preview-close">&times;</span>
+              <img class="preview-modal-content" id="preview-modal-img">
+              <div id="preview-caption"></div>
+            </div>
 
             <div class="row">
               <?php $divClass=2;$benefits=false;$ratings=false;?>
@@ -643,9 +651,9 @@
                 <div class="col-sm-{{12/$divClass}} tire-img">
 
                     <div class="tire-des">
-                        <a href="{{ViewTireImage(@$tire->prodimage)}}" class="zoomple">
-                        <img src="{{ViewTireImage(@$tire->prodimage)}}">
-                        </a>
+                        <div href="{{ViewTireImage(@$tire->prodimage)}}" class="zoomple">
+                        <img id="preview-image" class="wheelImageNew" src="{{ViewTireImage(@$tire->prodimage)}}">
+                        </div>
                         <h1>Price for TIRE ONLY</h1>
                         <h2>Rim depicted in image NOT INCLUDED</h2>
                     </div>
@@ -1680,5 +1688,17 @@ $('.spinner .btn:last-of-type').on('click', function() {
     }
     // Star Rating End
 </script>
+
+
+<script type="text/javascript">
+    
+    $(document).on('click', '#zoomple_image_overlay', function() {
+        $('.wheelImageNew').trigger( "click" ); 
+    });
+
+</script>
+
+
+     <script src="{{ asset('js/preview-image.js') }}"></script>
 
 @endsection
