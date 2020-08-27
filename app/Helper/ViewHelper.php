@@ -272,18 +272,8 @@ function ViewExistImage($url=''){
 	if($url != ''){
 		if(file_exists(public_path('/storage/tires/'.$url))){
 			return asset('/storage/tires/'.$url);
-		}else{
-			// $wheel_products_url="/storage/wheel_products/".$url;
-			// $misc_url="/storage/misc_images/".$url;
-			// if(file_exists(public_path($wheel_products_url))){
-			// 	return asset($wheel_products_url);
-			// }else{
-			// 	if(file_exists(public_path($misc_url))){
-			// 		return asset($misc_url);
-			// 	}else{
-					return false;
-			// 	}
-			// }
+		}else{ 
+					return false; 
 		}
 	}else{
 			return false;
@@ -540,16 +530,7 @@ function getVehicleList($columnname='',$sortorder='asc'){
 
 				$data = $vehicle->wheremake($selectedMake)->where('year',$selectedYear)->where('model',$selectedModel)->select('submodel','body')->distinct('submodel','body')->orderBy('submodel','DESC')->pluck('submodel','body');
             }
-
-            // Year change  or Loading Filter
-            // if(isset($request->make) && isset($request->year) && $request->changeBy == 'year' || $request->changeBy == ''){
-				// $data = $vehicle->select('model')->distinct('model')->where('year',$request->year)->wheremake($request->make)->orderBy('model','ASC')->get();
-            // }
-
-            // // Model change  or Loading Filter
-            // if(isset($request->make) && isset($request->year) && isset($request->model) && $request->changeBy == 'model' || $request->changeBy == ''){
-				// $data = $vehicle->select('submodel','body')->distinct('submodel','body')->where('year',$request->year)->wheremake($request->make)->wheremodel($request->model)->orderBy('submodel','ASC')->get();
-            // }
+ 
 
             return $data??[];
 		}
@@ -728,24 +709,7 @@ function getSliders($page){
 	$sliders = Slider::where('page',$page)->orderby('order')->get();
 
 	return $sliders;
-
-	// return [
-	// 	[
-	// 	"image"=>"image/Banner.jpg",
-	// 	"title"=>"WHEEL VISUALIZER",
-	// 	"description"=>"Vividly Designed And Made For Speed."
-	// 	],
-	// 	[
-	// 	"image"=>"image/Banner-1.jpg",
-	// 	"title"=>"WHEEL VISUALIZER",
-	// 	"description"=>"Because So Much Is Riding Your Tires."
-	// 	],
-	// 	[
-	// 	"image"=>"image/Banner-2.jpg",
-	// 	"title"=>"WHEEL VISUALIZER",
-	// 	"description"=>"Give Your Car A True Custom Look."
-	// 	],
-	// ];
+ 
 }
 
 
