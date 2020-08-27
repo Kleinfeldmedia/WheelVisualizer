@@ -534,7 +534,9 @@ class WheelProductController extends Controller
                                 ])
                 ->orderBy('price', 'ASC');
             }                       
-        
+            if(count($request->all()) == 0 ){
+                 $products = $products->limit(500);
+            }
             // $products= collect([]);//
             $products = $products->get()->unique('prodtitle'); 
             // if($zipcode != null){
