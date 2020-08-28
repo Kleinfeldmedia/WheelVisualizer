@@ -650,7 +650,7 @@ class WheelProductController extends Controller
 
         $vehicle = (object)Session::get('user.searchByVehicle')??[];
         $wheelsize = (object)Session::get('user.searchByWheelSize')??[];
-        
+
         // dd($vehicle,$wheelsize);
 
         if($request->has('v')){
@@ -659,7 +659,7 @@ class WheelProductController extends Controller
 
         $selectFields=['id','prodbrand', 'prodmodel', 'prodimage', 'wheeldiameter', 'wheelwidth', 'prodtitle','detailtitle', 'prodfinish', 'boltpattern1', 'boltpattern2', 'boltpattern3', 'offset1', 'offset2', 'hubbore', 'width', 'height', 'partno', 'price', 'price2', 'saleprice', 'qtyavail', 'salestart', 'proddesc'];
 
-        $wheel = WheelProduct::select($selectFields)->with('Reviews','Reviews.Ratings')->where('id', $product_id)->first();
+        $wheel = WheelProduct::select($selectFields)->with('Reviews','Reviews.Ratings','wheel')->where('id', $product_id)->first();
 
         // $wheelproducts = WheelProduct::select();
 

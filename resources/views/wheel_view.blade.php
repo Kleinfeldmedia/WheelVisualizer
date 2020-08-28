@@ -741,11 +741,16 @@
                                         <button class="btn btn-info" type="button"> Finance Them </button>
                                     </a>
                                 </div>
+
+              <!--                   <input type="hidden" id="frontback-image-{{$key}}" value="{{url('/')}}/{{front_back_path(@$wheel->prodimage)}}" data-partno="{{$wheel->partno}}">
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#VisualiserModal" onclick="APIWheelMapping('0')" >See On Your Car
+                                    </button>  -->
+                                         
                                 <div class="wheel_view_ship">
                                     <button class="btn btn-info" type="button"><a>Wheel Visualizer</a></button>
                                 </div>
                                 <div class="wheel_view_ship">
-                                    <button class="btn btn-info" type="button"><a>Will They Fit?</a></button>
+                                    <button class="btn btn-info will_they_fit" type="button">Will They Fit?</button>
                                 </div>
                             </div>
                         </div>
@@ -1218,6 +1223,12 @@
 @endsection
 @section('custom_scripts')
 <script>
+
+    var make="{{$vehicle->make}}";
+    var year="{{$vehicle->year}}";
+    var model="{{$vehicle->model}}";
+    var submodel="{{$vehicle->submodel}}";
+    console.log(make);
     var $loading = $('.se-pre-con');
     $(function() {
 
@@ -1241,6 +1252,16 @@
         });
 
     })
+</script>
+
+
+<script type="text/javascript">
+    
+    $('.will_they_fit').click(function(){
+         console.log('hfdkf')
+    });
+
+
 </script>
 
 <script type="text/javascript">
