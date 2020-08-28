@@ -726,7 +726,59 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>  
+                            </div>                              
+
+                           
+                            <div class="modal fade " id="getVehicleDetailsModal" role="dialog">
+                                <div class="modal-dialog wheel-view">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title text-left">Your Vehicle Selection</h4>
+                                        </div>
+                                        <div class="modal-body"> 
+
+                                            <div class="row">
+                                                <div class="col-sm-12">  
+                                                    <br>
+                                                        <div class="vehicle-list">
+ 
+                                                                <div class="dropdown">
+                                                                    <select required="" class="form-control browser-default custom-select cmake" name="make">
+                                                                        <option value="">Select Make</option>
+                                                                        
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="dropdown">
+                                                                    <select required="" class="form-control browser-default custom-select cyear" name="year">
+                                                                        <option value="">Select Year</option>
+                                                                      
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="dropdown">
+                                                                    <select required="" class="form-control browser-default custom-select cmodel" name="model">
+                                                                        <option value="">Select Model</option>
+                                                                        
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="dropdown">
+                                                                    <select required="" class="form-control browser-default custom-select csubmodel" name="submodel">
+                                                                        <option value="">Select Trim</option>
+                                                                        
+                                                                    </select>
+                                                                </div> 
+                                                                    <button type="button" class="btn vehicle-go checkVehicleFit ">GO</button> 
+                                                        </div> 
+                                                </div>
+                                            </div> 
+           
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-sm-4 wheel-View-but">
                             <div class="new-model-button">
@@ -751,6 +803,8 @@
                                 </div>
                                 <div class="wheel_view_ship">
                                     <button class="btn btn-info will_they_fit" type="button">Will They Fit?</button>
+                                    <input type="hidden" id="wheel_partno" value="{{$wheel->partno}}">
+                                    <input type="hidden" id="vehicleid" value="{{@Request::get('v')}}">
                                 </div>
                             </div>
                         </div>
@@ -1224,14 +1278,13 @@
 @section('custom_scripts')
 <script>
 
-    var make="{{$vehicle->make}}";
-    var year="{{$vehicle->year}}";
-    var model="{{$vehicle->model}}";
-    var submodel="{{$vehicle->submodel}}";
-    console.log(make);
-    var $loading = $('.se-pre-con');
     $(function() {
 
+    var make="{{@$vehicle->make}}";
+    var year="{{@$vehicle->year}}";
+    var model="{{@$vehicle->model}}";
+    var submodel="{{@$vehicle->submodel}}"; 
+    var $loading = $('.se-pre-con');
         $('.spinner .btn:first-of-type').on('click', function() {
             var btn = $(this);
             var input = btn.closest('.spinner').find('input');
@@ -1251,20 +1304,73 @@
             }
         });
 
-    })
-</script>
-
-
-<script type="text/javascript">
+    })  
     
-    $('.will_they_fit').click(function(){
-         console.log('hfdkf')
+    $('.will_they_fit').click(function(){ 
+
+        var partno = $('#wheel_partno').val();
+        var vehicleid = $('#vehicleid').val();
+        if(vehicleid ==''){
+            $('#getVehicleDetailsModal').modal('show');
+        }else{
+            $.ajax({
+                url: "/checkVehicleFit",
+                data: {
+                    'partno': partno,
+                    'vehicleid': vehicleid
+                },
+                success: function(result) {
+                    if (result['status'] ==true) { 
+                        $('.will_they_fit').text('This is fit your car!')
+                        $('.will_they_fit').addClass('btn-success')
+                        $('.will_they_fit').attr('style','color: white;background-color: green !important;');
+                        $('.will_they_fit').removeClass('btn-info')
+                    }
+                    if (result['status'] ==false) { 
+                        $('.will_they_fit').text('Does not fit your car')
+                        $('.will_they_fit').addClass('btn-warning')
+                        $('.will_they_fit').removeClass('btn-info')
+                    }
+     
+                }
+            });
+        }
+
+
     });
 
+    $('.checkVehicleFit').click(function(){ 
 
-</script>
-
-<script type="text/javascript">
+            $('#getVehicleDetailsModal').modal('hide');
+            var vmake = $('.cmake').val();
+            var vyear = $('.cyear').val();
+            var vmodel = $('.cmodel').val();
+            var vsubmodel = $('.csubmodel').val();
+            $.ajax({
+                url: "/checkVehicleFit",
+                data: {
+                    'make':vmake,
+                    'year':vyear,
+                    'model':vmodel,
+                    'submodel':vsubmodel,
+                    'partno': partno, 
+                },
+                success: function(result) {
+                    if (result['status'] ==true) { 
+                        $('.will_they_fit').text('This is fit your car!')
+                        $('.will_they_fit').addClass('btn-success')
+                        $('.will_they_fit').removeClass('btn-info')
+                    }
+                    if (result['status'] ==false) { 
+                        $('.will_they_fit').text('Does not fit your car')
+                        $('.will_they_fit').addClass('btn-warning')
+                        $('.will_they_fit').removeClass('btn-info')
+                    }
+     
+                }
+            });
+    })
+ 
     $('.wheel_diameter_tab').click(function() {
         $('.wheel_detail_title').text($(this).attr('data-value'));
     })
@@ -1309,13 +1415,7 @@
 
     })
 </script>
-<script type="text/javascript">
-    // $(function() {
-    
-
-    // })
-
-
+<script type="text/javascript"> 
     $(document).on('click', '#zoomple_image_overlay', function() {
 
         $('.wheelImageNew').trigger( "click" ); 
@@ -1387,79 +1487,79 @@
     });
 
 
-    // Start Rating
-    $(document).ready(function() {
+    // // Start Rating
+    // $(document).ready(function() {
 
-        /* 1. Visualizing things on Hover - See next part for action on click */
-        $('#stars li').on('mouseover', function() {
-            var onStar = parseInt($(this).data('value'), 10); // The star currently mouse on
+    //     /* 1. Visualizing things on Hover - See next part for action on click */
+    //     $('#stars li').on('mouseover', function() {
+    //         var onStar = parseInt($(this).data('value'), 10); // The star currently mouse on
 
-            // Now highlight all the stars that's not after the current hovered star
-            $(this).parent().children('li.star').each(function(e) {
-                if (e < onStar) {
-                    $(this).addClass('hover');
-                } else {
-                    $(this).removeClass('hover');
-                }
-            });
+    //         // Now highlight all the stars that's not after the current hovered star
+    //         $(this).parent().children('li.star').each(function(e) {
+    //             if (e < onStar) {
+    //                 $(this).addClass('hover');
+    //             } else {
+    //                 $(this).removeClass('hover');
+    //             }
+    //         });
 
-        }).on('mouseout', function() {
-            $(this).parent().children('li.star').each(function(e) {
-                $(this).removeClass('hover');
-            });
-        });
+    //     }).on('mouseout', function() {
+    //         $(this).parent().children('li.star').each(function(e) {
+    //             $(this).removeClass('hover');
+    //         });
+    //     });
 
-        var elems = {};
+    //     var elems = {};
 
-        /* 2. Action to perform on click */
-        $('#stars li').on('click', function() {
-            var onStar = parseInt($(this).data('value'), 10); // The star currently selected
-            var stars = $(this).parent().children('li.star');
+    //     /* 2. Action to perform on click */
+    //     $('#stars li').on('click', function() {
+    //         var onStar = parseInt($(this).data('value'), 10); // The star currently selected
+    //         var stars = $(this).parent().children('li.star');
 
-            for (i = 0; i < stars.length; i++) {
-                $(stars[i]).removeClass('selected');
-            }
+    //         for (i = 0; i < stars.length; i++) {
+    //             $(stars[i]).removeClass('selected');
+    //         }
 
-            for (i = 0; i < onStar; i++) {
-                $(stars[i]).addClass('selected');
-            }
+    //         for (i = 0; i < onStar; i++) {
+    //             $(stars[i]).addClass('selected');
+    //         }
 
-            // JUST RESPONSE (Not needed)
-            var ratingValue = parseInt($(this).data('value'), 10);
-            var ratingName = $(this).data('ratingname');
-            // console.log(ratingName,ratingValue)
+    //         // JUST RESPONSE (Not needed)
+    //         var ratingValue = parseInt($(this).data('value'), 10);
+    //         var ratingName = $(this).data('ratingname');
+    //         // console.log(ratingName,ratingValue)
 
-            if ($('.product-details').find('tr:visible')) {
-                var partno = $('.product-details').find('tr:visible').find('.partno-data').data('partno');
-                // elems.push(ratingValue); 
-                elems[ratingName] = ratingValue;
+    //         if ($('.product-details').find('tr:visible')) {
+    //             var partno = $('.product-details').find('tr:visible').find('.partno-data').data('partno');
+    //             // elems.push(ratingValue); 
+    //             elems[ratingName] = ratingValue;
 
-                $('#ratings').val(JSON.stringify(elems)); //store array
+    //             $('#ratings').val(JSON.stringify(elems)); //store array
 
-                $('#partno').val(partno);
+    //             $('#partno').val(partno);
 
-                // var value = $('#ratings').val(); //retrieve array
-                // value = JSON.parse(value);
-                // console.log(value)
-                // var prodtype = 'wheel'; 
+    //             // var value = $('#ratings').val(); //retrieve array
+    //             // value = JSON.parse(value);
+    //             // console.log(value)
+    //             // var prodtype = 'wheel'; 
 
                 
-            }
+    //         }
 
 
-            // alert(ratingValue)
-            // var msg = "";
-            // if (ratingValue > 1) {
-            //     msg = "Thanks! You rated this " + ratingValue + " stars.";
-            // } else {
-            //     msg = "We will improve ourselves. You rated this " + ratingValue + " stars.";
-            // }
-            // responseMessage(msg);
+    //         // alert(ratingValue)
+    //         // var msg = "";
+    //         // if (ratingValue > 1) {
+    //         //     msg = "Thanks! You rated this " + ratingValue + " stars.";
+    //         // } else {
+    //         //     msg = "We will improve ourselves. You rated this " + ratingValue + " stars.";
+    //         // }
+    //         // responseMessage(msg);
 
-        });
+    //     });
 
 
-    });
+    // });
 
 
     function responseMessage(msg) {
