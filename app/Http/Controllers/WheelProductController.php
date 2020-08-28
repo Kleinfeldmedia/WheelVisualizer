@@ -648,6 +648,15 @@ class WheelProductController extends Controller
     public function wheelproductview(Request $request, $product_id = '',$flag='')
     {
 
+        $vehicle = (object)Session::get('user.searchByVehicle')??[];
+        $wheelsize = (object)Session::get('user.searchByWheelSize')??[];
+        
+        // dd($vehicle,$wheelsize);
+
+        if($request->has('v')){
+            $vehicle =Vehicle::where('vehicle_id',$request->v)->first();
+        }
+
         $selectFields=['id','prodbrand', 'prodmodel', 'prodimage', 'wheeldiameter', 'wheelwidth', 'prodtitle','detailtitle', 'prodfinish', 'boltpattern1', 'boltpattern2', 'boltpattern3', 'offset1', 'offset2', 'hubbore', 'width', 'height', 'partno', 'price', 'price2', 'saleprice', 'qtyavail', 'salestart', 'proddesc'];
 
         $wheel = WheelProduct::select($selectFields)->with('Reviews','Reviews.Ratings')->where('id', $product_id)->first();
@@ -685,8 +694,6 @@ class WheelProductController extends Controller
                 // dd($products);
         }
         // dd($products);
-        $vehicle = (object)Session::get('user.searchByVehicle')??[];
-        $wheelsize = (object)Session::get('user.searchByWheelSize')??[];
         $similar_products = WheelProduct::select('prodimage','prodbrand','id','prodtitle','price')
             ->where('prodbrand', $wheel->prodbrand)
             ->get()

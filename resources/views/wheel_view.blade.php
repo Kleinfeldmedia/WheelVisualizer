@@ -405,7 +405,7 @@
                             @endif
                         </p>
                     </div>
-                    <div class="col-md-4 right-button"><button type="submit" class="btn vehicle-change"><a href="{{url('/wheelproducts')}}">Change</a></button></div>
+                    <div class="col-md-4 right-button"><button  class="btn vehicle-change" data-toggle="modal" data-target="#changeVehicleModal" ><a href="#">Change</a></button></div>
                 </div>
             </div>
             @endif
@@ -726,7 +726,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>  
                         </div>
                         <div class="col-sm-4 wheel-View-but">
                             <div class="new-model-button">
@@ -737,8 +737,8 @@
                                     </a>
                                 </div>
                                 <div class="wheel_view_ship">
-                                    <a href="{{url('/CartItems')}}">
-                                        <button class="btn btn-info" type="button"><a>Finance Them</a></button>
+                                    <a href="{{url('/cmspage/rimfinancing')}}">
+                                        <button class="btn btn-info" type="button"> Finance Them </button>
                                     </a>
                                 </div>
                                 <div class="wheel_view_ship">

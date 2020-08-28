@@ -128,6 +128,7 @@
              <div id="Offroad-View-Section"></div>
              <div id="Offroad-Size-View-Section"></div>
              <div id="Zipcode-Section"></div>
+             <div id="ChangeVehicleSection"></div>
          </section>
      </main>
      <!-- Main End -->
