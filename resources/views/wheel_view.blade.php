@@ -370,9 +370,8 @@
             @if(@$vehicle || @$flag=='searchByWheelSize')
             <div class="wheel-list-change-tab ">
                 <div class="row">
-                    <div class="col-md-8 left-head">
-                        <p>
-                            @if(@$vehicle && @$flag!='searchByWheelSize')
+                    <div class="col-md-8 left-head"> 
+                            @if($vehicle != null && @$flag!='searchByWheelSize')
                             Your Selected Vehicle:
                             <b>{{@$vehicle->year}} {{@$vehicle->make}} {{@$vehicle->model}} {{@$vehicle->submodel}}</b>
                             <br>
@@ -794,12 +793,16 @@
                                     </a>
                                 </div>
 
-              <!--                   <input type="hidden" id="frontback-image-{{$key}}" value="{{url('/')}}/{{front_back_path(@$wheel->prodimage)}}" data-partno="{{$wheel->partno}}">
-                                    <button class="btn btn-primary" data-toggle="modal" data-target="#VisualiserModal" onclick="APIWheelMapping('0')" >See On Your Car
-                                    </button>  -->
                                          
                                 <div class="wheel_view_ship">
-                                    <button class="btn btn-info" type="button"><a>Wheel Visualizer</a></button>
+
+                                    <button class="btn btn-info" onclick="ApplyOnCar('{{$wheel->partno}}',{{Request::get('v')}})" >Wheel Visualizer
+                                    </button>
+<!-- 
+                                <input type="hidden" id="frontback-image-{{$key}}" value="{{url('/')}}/{{front_back_path(@$wheel->prodimage)}}" data-partno="{{$wheel->partno}}">
+                                    <button class="btn btn-info"   onclick="ApplyOnCar('{{$wheel->partno}}',{{Request::get('v')}})" >Wheel Visualizer
+                                    </button>  -->
+                                    <!-- <button class="btn btn-info" type="button"><a>Wheel Visualizer</a></button> -->
                                 </div>
                                 <div class="wheel_view_ship">
                                     <button class="btn btn-info will_they_fit" type="button">Will They Fit?</button>
@@ -817,6 +820,8 @@
     </div>
 
     </div>
+
+             <div id="Visualiser-Section"></div>
 </section>
 
 <section id="demo-des">
