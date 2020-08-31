@@ -728,6 +728,56 @@
                             </div>                              
 
                            
+                            <div class="modal fade " id="getVehicleWheelApplyOnCar" role="dialog">
+                                <div class="modal-dialog wheel-view">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title text-left">Your Vehicle Selection</h4>
+                                        </div>
+                                        <div class="modal-body"> 
+
+                                            <div class="row">
+                                                <div class="col-sm-12">  
+                                                    <br>
+                                                        <div class="vehicle-list">
+ 
+                                                                <div class="dropdown">
+                                                                    <select required="" class="form-control browser-default custom-select cmake" name="make">
+                                                                        <option value="">Select Make</option>
+                                                                        
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="dropdown">
+                                                                    <select required="" class="form-control browser-default custom-select cyear" name="year">
+                                                                        <option value="">Select Year</option>
+                                                                      
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="dropdown">
+                                                                    <select required="" class="form-control browser-default custom-select cmodel" name="model">
+                                                                        <option value="">Select Model</option>
+                                                                        
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="dropdown">
+                                                                    <select required="" class="form-control browser-default custom-select csubmodel" name="submodel">
+                                                                        <option value="">Select Trim</option>
+                                                                        
+                                                                    </select>
+                                                                </div> 
+                                                                    <button type="button" class="btn vehicle-go WheelApplyOnCar ">GO</button> 
+                                                        </div> 
+                                                </div>
+                                            </div> 
+           
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="modal fade " id="getVehicleDetailsModal" role="dialog">
                                 <div class="modal-dialog wheel-view">
                                     <div class="modal-content">
@@ -796,7 +846,8 @@
                                          
                                 <div class="wheel_view_ship">
 
-                                    <button class="btn btn-info" onclick="ApplyOnCar('{{$wheel->partno}}',{{Request::get('v')}})" >Wheel Visualizer
+                                    <button class="btn btn-info" 
+                                    onclick="WheelApplyOnCar('{{$wheel->partno}}',{{Request::get('v')}})" >Wheel Visualizer
                                     </button>
 <!-- 
                                 <input type="hidden" id="frontback-image-{{$key}}" value="{{url('/')}}/{{front_back_path(@$wheel->prodimage)}}" data-partno="{{$wheel->partno}}">
@@ -1422,11 +1473,9 @@
 </script>
 <script type="text/javascript"> 
     $(document).on('click', '#zoomple_image_overlay', function() {
-
         $('.wheelImageNew').trigger( "click" ); 
     });
 </script>
-
 
 <script type="text/javascript">
     $('.addToCart').click(function() {
@@ -1575,30 +1624,57 @@
 </script>
 
 <script type="text/javascript">
-var col = new String();
-var x=1;var y;
+    var col = new String();
+    var x=1;var y;
 
-function blink()
-{
-    if(x%2) 
+    function blink()
     {
-        col = "rgb(255,0,0)";
-        size ="16";
-    }else{
-        col = "#070b31";
-        size ="14";
+        if(x%2) 
+        {
+            col = "rgb(255,0,0)";
+            size ="16";
+        }else{
+            col = "#070b31";
+            size ="14";
+        }
+
+        x++;
+        if(x>2){
+            x=1
+        };
+        setTimeout("blink()",500);
+        $('.matching-tire').attr('style','color:'+col+';background-color: yellow !important;font-size:'+size+'px');
+    }
+</script>
+<script src="{{ asset('js/preview-image.js') }}"></script>
+<script type="text/javascript">
+    function WheelApplyOnCar(partno,vehicleid=''){
+
+        if(vehicleid ==''){ 
+            $('#getVehicleWheelApplyOnCar').modal('show');
+        }else{ 
+            ApplyOnCar(partno,vehicleid);
+        }
+
     }
 
-    x++;
-    if(x>2){
-        x=1
-    };
-    setTimeout("blink()",500);
-    $('.matching-tire').attr('style','color:'+col+';background-color: yellow !important;font-size:'+size+'px');
-}
+    $(document).on('click', '.WheelApplyOnCar', function() { 
+            var partno = $('#wheel_partno').val();
+            var vmake = $('.cmake').val();
+            var vyear = $('.cyear').val();
+            var vmodel = $('.cmodel').val();
+            var vsubmodel = $('.csubmodel').val();
+            console.log('Vehicle',vmake,vyear,vmodel,vsubmodel)
+            var vehiclesDetails={
+                    make:vmake,
+                    year:vyear,
+                    model:vmodel,
+                    submodel:vsubmodel
+            };
+            // $(".se-pre-con").show();
+            ApplyOnCar(partno,'',vehiclesDetails);
+            $('#getVehicleWheelApplyOnCar').modal('hide'); 
+            // $(".se-pre-con").hide();
+    });
 </script>
-
-
-
-     <script src="{{ asset('js/preview-image.js') }}"></script>
 @endsection
