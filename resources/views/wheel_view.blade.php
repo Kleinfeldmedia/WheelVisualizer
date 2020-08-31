@@ -366,41 +366,43 @@
     <!-- Cart Start -->
     <div class="container">
 
-        <div class="row">
-            @if(@$vehicle || @$flag=='searchByWheelSize')
+        <div class="row"> 
+            @if(@$vehicle->year || @$flag=='searchByWheelSize')
             <div class="wheel-list-change-tab ">
                 <div class="row">
                     <div class="col-md-8 left-head"> 
-                            @if($vehicle != null && @$flag!='searchByWheelSize')
-                            Your Selected Vehicle:
-                            <b>{{@$vehicle->year}} {{@$vehicle->make}} {{@$vehicle->model}} {{@$vehicle->submodel}}</b>
-                            <br>
+                            @if(@$vehicle->year && @$flag!='searchByWheelSize')
+                                Your Selected Vehicle:
+                                <b>{{@$vehicle->year}} {{@$vehicle->make}} {{@$vehicle->model}} {{@$vehicle->submodel}}</b>
+                                <br>
                             @else
-                            @if(@$flag == 'searchByWheelSize')
+                                @if(@$flag == 'searchByWheelSize')
 
-                            Your Selected
-                            @if(@$wheelsize->wheeldiameter)
+                                    Your Selected
+                                    @if(@$wheelsize->wheeldiameter)
 
-                            Diameter:
-                            <b>{{@$wheelsize->wheeldiameter}}</b> ,
-                            @endif
+                                        Diameter:
+                                        <b>{{@$wheelsize->wheeldiameter}}</b> ,
+                                    @endif
 
-                            @if(@$wheelsize->wheelwidth)
-                            Width:
-                            <b>{{@$wheelsize->wheelwidth}}</b> ,
-                            @endif
+                                    @if(@$wheelsize->wheelwidth)
+                                        Width:
+                                        <b>{{@$wheelsize->wheelwidth}}</b> ,
+                                    @endif
 
-                            @if(@$wheelsize->boltpattern)
-                            Bolt Pattern:
-                            <b>{{showBoltPattern(@$wheelsize->boltpattern)}}</b> ,
-                            @endif
+                                    @if(@$wheelsize->boltpattern)
+                                        Bolt Pattern:
+                                        <b>{{showBoltPattern(@$wheelsize->boltpattern)}}</b> ,
+                                    @endif
 
-                            @if(@$wheelsize->minoffset)
-                            Offset:
-                            <b>{{@$wheelsize->minoffset}}</b>
-                            @if(@$wheelsize->maxoffset)<b> to {{@$wheelsize->maxoffset}}</b> @endif
-                            @endif
-                            @endif
+                                    @if(@$wheelsize->minoffset)
+                                        Offset:
+                                        <b>{{@$wheelsize->minoffset}}</b>
+                                        @if(@$wheelsize->maxoffset)
+                                            <b> to {{@$wheelsize->maxoffset}}</b> 
+                                        @endif
+                                    @endif
+                                @endif
                             @endif
                         </p>
                     </div>
@@ -1402,15 +1404,19 @@
             var vyear = $('.cyear').val();
             var vmodel = $('.cmodel').val();
             var vsubmodel = $('.csubmodel').val();
+            var vehicleSelectedData={
+
+                    make:vmake,
+                    year:vyear,
+                    model:vmodel,
+                    submodel:vsubmodel,
+                    partno: partno, 
+            }
             $.ajax({
-                url: "/checkVehicleFit",
-                data: {
-                    'make':vmake,
-                    'year':vyear,
-                    'model':vmodel,
-                    'submodel':vsubmodel,
-                    'partno': partno, 
-                },
+                url: "/checkVehicleFit", 
+                data: JSON.stringify(vehicleSelectedData), // stringyfy before passing
+                dataType: 'json', // payload is json
+                contentType : 'application/json',
                 success: function(result) {
                     if (result['status'] ==true) { 
                         $('.will_they_fit').text('This is fit your car!')
@@ -1540,81 +1546,7 @@
 
     });
 
-
-    // // Start Rating
-    // $(document).ready(function() {
-
-    //     /* 1. Visualizing things on Hover - See next part for action on click */
-    //     $('#stars li').on('mouseover', function() {
-    //         var onStar = parseInt($(this).data('value'), 10); // The star currently mouse on
-
-    //         // Now highlight all the stars that's not after the current hovered star
-    //         $(this).parent().children('li.star').each(function(e) {
-    //             if (e < onStar) {
-    //                 $(this).addClass('hover');
-    //             } else {
-    //                 $(this).removeClass('hover');
-    //             }
-    //         });
-
-    //     }).on('mouseout', function() {
-    //         $(this).parent().children('li.star').each(function(e) {
-    //             $(this).removeClass('hover');
-    //         });
-    //     });
-
-    //     var elems = {};
-
-    //     /* 2. Action to perform on click */
-    //     $('#stars li').on('click', function() {
-    //         var onStar = parseInt($(this).data('value'), 10); // The star currently selected
-    //         var stars = $(this).parent().children('li.star');
-
-    //         for (i = 0; i < stars.length; i++) {
-    //             $(stars[i]).removeClass('selected');
-    //         }
-
-    //         for (i = 0; i < onStar; i++) {
-    //             $(stars[i]).addClass('selected');
-    //         }
-
-    //         // JUST RESPONSE (Not needed)
-    //         var ratingValue = parseInt($(this).data('value'), 10);
-    //         var ratingName = $(this).data('ratingname');
-    //         // console.log(ratingName,ratingValue)
-
-    //         if ($('.product-details').find('tr:visible')) {
-    //             var partno = $('.product-details').find('tr:visible').find('.partno-data').data('partno');
-    //             // elems.push(ratingValue); 
-    //             elems[ratingName] = ratingValue;
-
-    //             $('#ratings').val(JSON.stringify(elems)); //store array
-
-    //             $('#partno').val(partno);
-
-    //             // var value = $('#ratings').val(); //retrieve array
-    //             // value = JSON.parse(value);
-    //             // console.log(value)
-    //             // var prodtype = 'wheel'; 
-
-                
-    //         }
-
-
-    //         // alert(ratingValue)
-    //         // var msg = "";
-    //         // if (ratingValue > 1) {
-    //         //     msg = "Thanks! You rated this " + ratingValue + " stars.";
-    //         // } else {
-    //         //     msg = "We will improve ourselves. You rated this " + ratingValue + " stars.";
-    //         // }
-    //         // responseMessage(msg);
-
-    //     });
-
-
-    // });
-
+ 
 
     function responseMessage(msg) {
         $('.success-box').fadeIn(200);

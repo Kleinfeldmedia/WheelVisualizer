@@ -663,7 +663,8 @@ class WheelProductController extends Controller
 
                 $chassis = Chassis::where('chassis_id', @$vehicle->dr_chassis_id)->first(); 
 
-                  
+                  if($chassis_models != null){
+
                         //*********************** Offset checking **************************
                         
                         if($chassis_models->rim_size_r == null || $chassis_models->rim_size_r == 'NULL'){
@@ -673,7 +674,6 @@ class WheelProductController extends Controller
                             $product = $product->whereBetween('offset1', [$chassis->min_et_front, $chassis->max_et_front]);
                             $product = $product->whereBetween('offset1', [$chassis->min_et_rear, $chassis->max_et_rear]);
                         }
-
                         //*********************** Plus Size checking **************************
 
 
@@ -705,6 +705,7 @@ class WheelProductController extends Controller
  
 
 
+
                 //*********************** BCD Bolt Pattern checking **************************
                 if (strpos($chassis->pcd, '.') !== false)
                 {
@@ -720,13 +721,14 @@ class WheelProductController extends Controller
                     $product = $product->whereIn('boltpattern1', [$boltpattern,'Blank5']);
                 }
 
+                  }
                 $product = $product->first();
 
                 if($product != null){
-                    return ['status'=>true];
+                    return ['status'=>true,'product'=>$product];
                 }else{
 
-                    return ['status'=>false];
+                    return ['status'=>false,'product'=>$product];
                 }
 
 
