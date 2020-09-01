@@ -54,11 +54,11 @@ function NavTireFilters(width = '',profile = '', changeBy = '') {
             });
         }
 
-        if(width != null && changeBy !=''){
+        // if(width != null && changeBy !=''){
 
-            $('.NavWidth').append('<option value="' + width + '" selected>' + width + '</option>');
-            // $('.NavWidth').trigger("chosen:updated");
-        }
+        //     $('.NavWidth').append('<option value="' + width + '" selected>' + width + '</option>');
+        //     // $('.NavWidth').trigger("chosen:updated");
+        // }
 
         // $('.NavProfile').trigger("chosen:updated");
         // $('.NavDiameter').trigger("chosen:updated");

@@ -388,7 +388,10 @@ class TireController extends Controller
                 ->pluck('total','prodbrand');
         }
 
-
+                      
+            if(count($request->all()) == 0 ){
+                 $tires = $tires->limit(500);
+            }
 
             $tires = MakeCustomPaginator($tires, $request, 8);
  
