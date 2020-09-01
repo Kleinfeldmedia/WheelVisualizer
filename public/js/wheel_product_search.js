@@ -79,10 +79,10 @@ function ProductWheelSizeFilters(wheeldiameter = '',wheelwidth = '',boltpattern 
             });
         }
 
-        if(wheeldiameter != null && changeBy !=''){
+        // if(wheeldiameter != null && changeBy !=''){
 
-            $('.ProductWheelDiameter').append('<option value="' + wheeldiameter + '" selected>' + wheeldiameter + '</option>');
-        }
+        //     $('.ProductWheelDiameter').append('<option value="' + wheeldiameter + '" selected>' + wheeldiameter + '</option>');
+        // }
 
 
     }).fail(function(msg) {
