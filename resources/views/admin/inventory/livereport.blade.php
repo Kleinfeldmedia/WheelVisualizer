@@ -82,9 +82,11 @@ $is_write_access = VerifyAccess('logs','write');
         });
 
 
-setInterval(function(){getLiveData();}, 6000);
+// setInterval(function(){getLiveData();}, 6000);
 
-
+function(){
+  getLiveData();
+}
 
 function getLiveData(){
       console.log('getLiveData');

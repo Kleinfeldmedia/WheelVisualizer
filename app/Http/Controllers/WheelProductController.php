@@ -292,7 +292,7 @@ class WheelProductController extends Controller
                 // dd($plusSizesArray,$boltpattern,$diameterPart);
             }
 
-            // Wheel Width size search in the Sidebar
+            // Wheel Width size search in the Si0debar
             $wheelwidth = clone $products;
 
             if (isset($request->brand) && $request->brand) {
