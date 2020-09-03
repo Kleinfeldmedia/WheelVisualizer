@@ -124,7 +124,9 @@
                     <div class="collapse navbar-collapse" id="navbar-collapse-1">
                         <ul class="nav navbar-nav navbar">
                             <li class="dropdown dropdown-nav">
-                                <!-- <a title="WHEELS" href="{{route('wheelproducts')}}">DISCOUNT WHEELS <span class="caret"></span></a> -->
+                                <!-- 
+                                    <a title="WHEELS" href="{{route('wheelproducts')}}">DISCOUNT WHEELS <span class="caret"></span></a>
+                                -->
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">DISCOUNT WHEELS <span class="caret"></span></a>
                                 <ul class="dropdown-menu nav-dropdown">
 
@@ -136,7 +138,6 @@
                                                 <img src="{{url('image/suv.svg')}}" class="moving-truck"></h1>
                                         </div>
                                     </div>
-
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="col-sm-2 shop-vehicle-head">
@@ -178,7 +179,7 @@
                                                             <input required="" type="text" class="form-control" name="zip" placeholder="Enter ZIP">
                                                         </div> -->
                                                         <!-- <a href="" disabled> -->
-                                                            <button type="button" class="btn vehicle-go SearchByVehicleGo ">GO</button>
+                                                        <button type="button" class="btn vehicle-go SearchByVehicleGo ">GO</button>
                                                         <!-- </a> -->
                                                     </form>
                                                 </div>
@@ -218,7 +219,8 @@
                                                             <select class="form-control browser-default custom-select BoltPattern" name="boltpattern">
                                                                 <option value="">Select BoltPattern</option>
                                                                 @foreach(getWheelList('boltpattern') as $key => $boltpattern)
-                                                                <option value="{{$boltpattern}}" {{(@\Session::get('user.searchByWheelSize')['boltpattern'] == $boltpattern)?'selected':''}}>{{$boltpattern}}</option>
+                                                                <option value="{{$boltpattern}}" 
+                                                                    {{(@\Session::get('user.searchByWheelSize')['boltpattern'] == $boltpattern)?'selected':''}}>{{$boltpattern}}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>

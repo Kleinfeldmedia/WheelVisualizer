@@ -213,13 +213,7 @@
 
      <!-- <script src="http://localhost:8001/js/wheel-api-new18.js"></script>  -->
      <script src="http://web9.vtdns.net/js/wheel-api-new18.js"></script>
-
-     <script type="text/javascript">
-     </script>
-
-
-
-
+ 
      <script src="{{ asset('js/tire_product_search.js') }}"></script>
      <script src="{{ asset('js/wheel_product_search.js') }}"></script>
      <script src="{{ asset('js/wheel_visualiser.js') }}"></script>

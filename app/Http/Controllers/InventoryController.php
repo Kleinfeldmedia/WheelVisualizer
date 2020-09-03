@@ -141,31 +141,7 @@ class InventoryController extends Controller
         return view('admin.inventory.livereport',compact('liveData'));
     }
 
-    public function  CopyTableToServer(Request $request){
-        // dd(Inventory::get()->count());
-        $db_ext = \DB::connection('sqlsrv');
-
-        $columns=[
-            'partno',
-            'vendor_partno',
-            'mpn',
-            'description',
-            'brand',
-            'model',
-            'location_code',
-            'available_qty',
-            'price',
-            'drop_shipper',
-            'ds_vendor_code',
-            'location_name'
-        ];
-        // Get table data from production
-        foreach(\DB::table('inventories')->select($columns)->get() as $data){
-            // dd($data);
-             // Save data to staging database - default db connection
-             $db_ext->table('inventories')->insert((array) $data);
-        }
-    }
+ 
 
 
 
@@ -1395,54 +1371,7 @@ class InventoryController extends Controller
         return "success";
     }
 
-
-    public function insertOrUpdate($table, $rows, array $exclude = [])
-    {
-        // We assume all rows have the same keys so we arbitrarily pick one of them.
-        $columns = array_keys($rows[0]);
-
-        $columnsString = implode('`,`', $columns);
-        $values = $this->buildSQLValuesFrom($rows);
-        $updates = $this->buildSQLUpdatesFrom($columns, $exclude);
-        $params = array_flatten($rows);
-
-        $query = "insert into {$table} (`{$columnsString}`) values {$values} on duplicate key update {$updates}";
-        // dd($query);
-        $res = \DB::statement($query, $params);
-
-    }
-
-    /**
-     * Build proper SQL string for the values.
-     *
-     * @param array $rows
-     * @return string
-     */
-    protected function buildSQLValuesFrom(array $rows)
-    {
-        $values = collect($rows)->reduce(function ($valuesString, $row) {
-            return $valuesString .= '(' . rtrim(str_repeat("?,", count($row)), ',') . '),';
-        }, '');
-
-        return rtrim($values, ',');
-    }
-
-    /**
-     * Build proper SQL string for the on duplicate update scenario.
-     *
-     * @param       $columns
-     * @param array $exclude
-     * @return string
-     */
-    protected function buildSQLUpdatesFrom($columns, array $exclude)
-    {
-        $updateString = collect($columns)->reject(function ($column) use ($exclude) {
-            return in_array($column, $exclude);
-        })->reduce(function ($updates, $column) {
-            return $updates .= "`{$column}`=VALUES(`{$column}`),";
-        }, '');
-
-        return trim($updateString, ',');
-    }
+ 
+ 
 
 }

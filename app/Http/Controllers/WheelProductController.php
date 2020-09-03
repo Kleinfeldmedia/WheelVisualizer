@@ -133,14 +133,7 @@ class WheelProductController extends Controller
              } 
  
             $products = WheelProduct::with('wheel')->select('id', 'prodbrand','detailtitle', 'prodmodel', 'prodfinish', 'prodimage', 'wheeldiameter', 'wheelwidth', 'prodtitle', 'price', 'partno','partno_old','wheeltype','rf_lc','boltpattern1','offset1','offset2','boltpattern1','wheeltype');
-
-            // if($zipcode==null){
-            //     $products= $products->where('id','<',0);
-            // }
-
-            // if($request->flag == 'searchByVehicle' && !($request->has('liftsize'))){
-            //     $products= $products->where('id','<',0);
-            // }
+ 
 
 
             $branddesc = [];
@@ -287,9 +280,7 @@ class WheelProductController extends Controller
                 if($boltpattern != ''){
                     $products = $products->whereIn('boltpattern1', [$boltpattern,'Blank5']);
                 }
-
-                // $request->flag = 'searchByWheelSize';
-                // dd($plusSizesArray,$boltpattern,$diameterPart);
+ 
             }
 
             // Wheel Width size search in the Si0debar
@@ -434,51 +425,7 @@ class WheelProductController extends Controller
             // if zipcode is available....
             if($zipcode != null){
                 $zipcodes = Zipcode::getZipcodesByRadius($zipcode,'150');
-                // dd($zipcodes);
-                // $zipcodes = array(
-                //     0 => "32218",
-                //     4 => "32226",
-                //     6 => "32208",
-                //     7 => "32206",
-                //     8 => "32209",
-                //     9 => "32204",
-                //     10 => "32225",
-                //     11 => "32231",
-                //     12 => "32216",
-                //     13 => "32227",
-                //     14 => "32220",
-                //     15 => "32210",
-                //     16 => "32266",
-                //     17 => "32240",
-                //     18 => "32257",
-                //     19 => "32009",
-                //     20 => "32004",
-                //     21 => "32006",
-                //     22 => "32258",
-                //     23 => "31548",
-                //     24 => "31562",
-                //     25 => "32259",
-                //     26 => "32260",
-                //     27 => "32234",
-                //     29 => "32068",
-                //     30 => "31569",
-                //     31 => "32067",
-                //     32 => "32063",
-                //     33 => "32040",
-                //     34 => "31537",
-                //     35 => "32092",
-                //     38 => "32058",
-                //     40 => "31565",
-                //     41 => "32095",
-                //     42 => "32083",
-                //     43 => "32085",
-                //     44 => "31568",
-                //     45 => "32091",
-                //     47 => "32007",
-                //     48 => "31521",
-                //     49 => "31523",
-                // );
-            // dd($zipcodes);
+               
  
  
                 // $products = $products->with([
@@ -506,22 +453,7 @@ class WheelProductController extends Controller
                                 ])
    
                 ->orderBy('price', 'ASC');
-                // $radius_products = collect([9,7,8,2,4,6]);
-                // rsort($radius_products);
-                // $products = collect([1,2,3,4,5,6]);
-                // if($radius_products->count() > 0){
-
-                //     foreach ($radius_products as $key => $rproduct) {
-                //         $products->prepend($rproduct);
-                //     }
-                // }
-                // dd($products->get());
-                // $radius_products = $radius_products         
-                // ->orderBy('price', 'ASC')
-                // ->get()
-                // ->unique('prodtitle');
-                // $products = WheelProduct::limit(10);
-                // dd('dkjskdj');
+             
  
             }else{
 
@@ -539,12 +471,7 @@ class WheelProductController extends Controller
             }
             // $products= collect([]);//
             $products = $products->get()->unique('prodtitle'); 
-            // if($zipcode != null){
-            //     // $products =collect($radius_products->merge($products)); 
-            //     $products =$products->merge($radius_products);
-
-            // }  
-            // $products = $products->unique('prodtitle');
+          
  
             $products = MakeCustomPaginator($products, $request, 9);
             // dd($products);

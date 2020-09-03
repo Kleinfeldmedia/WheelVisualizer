@@ -7,9 +7,6 @@ use Illuminate\Http\Request;
 class AdminController extends Controller
 {
 
-
-
-
     public function home(Request $request)
     {  
 
