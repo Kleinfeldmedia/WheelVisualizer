@@ -38,12 +38,12 @@ class TireController extends Controller
 
 
 
-            if(count($request->all()) == 0 ){
-                 $tires = $tires->limit(500);
-            }
+        if(count($request->all()) == 0 ){
+             $tires = $tires->limit(100);
+        }
 
 
-            
+
         // dd(base64_decode($chassis_model_id));
         $chassis_model = ChassisModel::find(base64_decode($chassis_model_id)) ?? null;
         // dd($chassis_model);
