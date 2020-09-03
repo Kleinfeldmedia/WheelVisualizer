@@ -134,7 +134,9 @@ class WheelProductController extends Controller
  
             $products = WheelProduct::with('wheel')->select('id', 'prodbrand','detailtitle', 'prodmodel', 'prodfinish', 'prodimage', 'wheeldiameter', 'wheelwidth', 'prodtitle', 'price', 'partno','partno_old','wheeltype','rf_lc','boltpattern1','offset1','offset2','boltpattern1','wheeltype');
  
-
+            if(count($request->all()) == 0 ){
+                 $products = $products->limit(500);
+            }
 
             $branddesc = [];
             $car_images='';
@@ -466,9 +468,7 @@ class WheelProductController extends Controller
                                 ])
                 ->orderBy('price', 'ASC');
             }                       
-            if(count($request->all()) == 0 ){
-                 $products = $products->limit(500);
-            }
+
             // $products= collect([]);//
             $products = $products->get()->unique('prodtitle'); 
           

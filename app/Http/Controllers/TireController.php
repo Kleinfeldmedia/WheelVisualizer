@@ -35,6 +35,15 @@ class TireController extends Controller
 
         $tires = $tires->select('prodimage','id','prodtitle','detailtitle','tiresize','loadindex','speedrating',
                     'price','prodmodel','tirewidth','tireprofile','tirediameter','partno');
+
+
+
+            if(count($request->all()) == 0 ){
+                 $tires = $tires->limit(500);
+            }
+
+
+            
         // dd(base64_decode($chassis_model_id));
         $chassis_model = ChassisModel::find(base64_decode($chassis_model_id)) ?? null;
         // dd($chassis_model);
@@ -388,10 +397,7 @@ class TireController extends Controller
                 ->pluck('total','prodbrand');
         }
 
-                      
-            if(count($request->all()) == 0 ){
-                 $tires = $tires->limit(500);
-            }
+                     
 
             $tires = MakeCustomPaginator($tires, $request, 8);
  
