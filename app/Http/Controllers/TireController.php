@@ -37,19 +37,16 @@ class TireController extends Controller
                     'price','prodmodel','tirewidth','tireprofile','tirediameter','partno');
 
 
-                      
-            if(count($request->all()) == 0 ){
-                 $tires = $tires->limit(50);
-            }
+                  
+        if(count($request->all()) == 0 ){
+             $tires = $tires->limit(50);
+        }
 
 
-            
-        // dd(base64_decode($chassis_model_id));
-        $chassis_model = ChassisModel::find(base64_decode($chassis_model_id)) ?? null;
-        // dd($chassis_model);
-        $vehicle = Vehicle::where('vehicle_id',base64_decode($vehicle_id))->first() ?? null;
-
-        // dd($chassis_model,$vehicle,$wheelproduct_id);
+ 
+        $chassis_model = ChassisModel::find(base64_decode($chassis_model_id)) ?? null; 
+        
+        $vehicle = Vehicle::where('vehicle_id',base64_decode($vehicle_id))->first() ?? null; 
 
         if (isset($request->tiresize) && $request->tiresize) {
                 $tires = $tires->where('tiresize',base64_decode($request->tiresize));
@@ -243,13 +240,8 @@ class TireController extends Controller
                             ;
                 }
 
-            }
-            // dd($tires->get());
+            } 
 
-
-            // dd($wheelpackage);
-            // if zipcode is available....
-            // dd($vehicle);
             $zipcode =Session::get('user.zipcode');
             if($zipcode != null){ 
                 if($is_shipped != ''){
@@ -257,52 +249,7 @@ class TireController extends Controller
                 }else{
                         $zipcodes = Zipcode::getZipcodesByRadius($zipcode,150);
 
-                }
-                // dd($zipcodes);
-                // $zipcodes = array(
-                //     0 => "32218",
-                //     4 => "32226",
-                //     6 => "32208",
-                //     7 => "32206",
-                //     8 => "32209",
-                //     9 => "32204",
-                //     10 => "32225",
-                //     11 => "32231",
-                //     12 => "32216",
-                //     13 => "32227",
-                //     14 => "32220",
-                //     15 => "32210",
-                //     16 => "32266",
-                //     17 => "32240",
-                //     18 => "32257",
-                //     19 => "32009",
-                //     20 => "32004",
-                //     21 => "32006",
-                //     22 => "32258",
-                //     23 => "31548",
-                //     24 => "31562",
-                //     25 => "32259",
-                //     26 => "32260",
-                //     27 => "32234",
-                //     29 => "32068",
-                //     30 => "31569",
-                //     31 => "32067",
-                //     32 => "32063",
-                //     33 => "32040",
-                //     34 => "31537",
-                //     35 => "32092",
-                //     38 => "32058",
-                //     40 => "31565",
-                //     41 => "32095",
-                //     42 => "32083",
-                //     43 => "32085",
-                //     44 => "31568",
-                //     45 => "32091",
-                //     47 => "32007",
-                //     48 => "31521",
-                //     49 => "31523",
-                // ); 
-
+                } 
                 // $radius_tires = clone $tires;
                 // $radius_tires = $radius_tires->whereHas('Inventories')->whereHas('Inventories.Dropshippers')->with([
                 //                     'Inventories'=>function ($query){ 
@@ -408,10 +355,7 @@ class TireController extends Controller
             }
 
 
-  
-
-        // dd($tires);
-        // dd($speedratings,json_decode(base64_decode($request->tirespeedrating)));
+   
         return view('tires_list',compact('tires','vehicle','chassis_model','load_indexs','speedratings','brands','countsByBrand','prices','request','zipcode','wheelproduct_id','plussizes'));
     }
 
@@ -422,13 +366,14 @@ class TireController extends Controller
      */
     public function tireview(Request $request,$tire_id='',$vehicle_id='',$wheelproduct_id='')
     {
+
+
+        $vehicle=null;
+
         if($vehicle_id!=''){
             $vehicle = Vehicle::with('ChassisModels')->where('id',base64_decode($vehicle_id))->first();
-        }else
-        {
-            $vehicle='';
         }
-        // dd($vehicle);
+
         $tire = Tire::select('id','prodimage','warranty','detailtitle','prodbrand','tiresize','prodmodel',
                 'speedrating','loadindex','utqg','partno','originalprice','yousave','set_amount','vehicle_type','price','saletype','qtyavail','dry_performance','wet_performance','mileage_performance','ride_comfort','quiet_ride',
                 'winter_performance','fuel_efficiency','braking','responsiveness','sport','off_road','youtube1','youtube2','youtube3','youtube4','proddesc','benefits1','benefits2','benefits3','benefits4','benefitsimage1','benefitsimage2','benefitsimage3','benefitsimage4','badge1','badge2','badge3','detaildesctype','detaildescfeatures')
@@ -441,13 +386,10 @@ class TireController extends Controller
                 ->get();
 
         $similar_tires = Tire::select('id','detailtitle','prodimage','id','warranty','tiresize',
-                'speedrating','loadindex','utqg','partno','price','prodmodel')
-                // ->where('prodbrand',$tire->prodbrand)
+                'speedrating','loadindex','utqg','partno','price','prodmodel') 
                 ->where('tiresize',$tire->tiresize)
                 ->where('speedrating',$tire->speedrating)
-                ->where('loadindex',$tire->loadindex)
-                // ->orWhere('tirewidth',$tire->tirewidth)
-                // ->orWhere('tirediameter',$tire->tirediameter)
+                ->where('loadindex',$tire->loadindex) 
                 ->get()
                 ->unique('prodmodel');
         return view('tire_view',compact('tire','diff_tires','similar_tires','vehicle','wheelproduct_id'));
@@ -753,46 +695,7 @@ class TireController extends Controller
         return 'success';
     }
 
-
-
-    // public function Falken_Import(){
-    //      // $in_file = public_path('/storage/tires_data/Falken-Export.csv'); 
-    //      $in_file = public_path('/storage/tires_data/01 - Falken-Tire-Data - Falken 950_with_desc.csv'); 
-
-    //     if( !$fr = @fopen($in_file, "r") ) die("Failed to open file");
-    //     // $fw = fopen($out_file, "w");
-    //     $i=1;
-    //     while( ($data = fgetcsv($fr, 2000, ",")) !== FALSE ) {
-    //             if($i != 1){
-    //                 $tire =Tire::where('partno',$data[0])->first();
-    //                 $tire->badge1 = $data[52];
-    //                 $tire->badge2 = $data[53];
-    //                 $tire->badge3 = $data[54];
-    //                 $tire->originalprice = $data[55];
-    //                 $tire->detaildesctype = $data[56];
-    //                 $tire->detaildescfeatures = $data[57];
-    //                 $tire->detaildesc = $data[58];
-    //                 $tire->benefits1 = $data[59];
-    //                 $tire->benefits2 = $data[60];
-    //                 $tire->benefits3 = $data[61];
-    //                 $tire->benefits4 = $data[62];
-    //                 $tire->benefitsimage1 = $data[63];
-    //                 $tire->benefitsimage2 = $data[64];
-    //                 $tire->benefitsimage3 = $data[65];
-    //                 $tire->benefitsimage4 = $data[66];
-    //                 $tire->prodlandingdesc = $data[67];
-    //                 $tire->prodimage1 = $data[68];
-    //                 $tire->prodimage2 = $data[69];
-    //                 $tire->prodimage3 = $data[70];
-    //                 $tire->save(); 
-    //             }
-    //             $i++;
-    //         }
-    //     fclose($fr);
-    //     // fclose($fw);
-    //     return 'hiii';
-    // }
-
+ 
 
 
  function tires_update(){

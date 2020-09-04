@@ -102,15 +102,7 @@
                                 <td>{{@$tire->qtyavail?:'-'}}</td> -->
                                 <td width="30%"><?=@$tire->prodmetadesc?></td>
                                 <!-- <td width="30%"><?=@$tire->proddesc?></td> -->
-                                <td>
-<!--                                     <form action="{{ route('admin.tire.destroy', $tire->id) }}" method="POST">
-                                        {{ csrf_field() }}
-                                        <input type="hidden" name="_method" value="DELETE">
-
-                                    <a class="btn btn-default look-a-like" data-toggle="modal" data-target="#myModal{{@$key}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                        <button class="btn btn-default look-a-like" onclick="return confirm('Are you sure?')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                    </form> -->
-
+                                <td>  
                                     <a class="btn btn-default" href="{{url('/admin/tire')}}/{{base64_encode(@$tire->id)}}/model"><i class="fa fa-eye" aria-hidden="true"></i> View Models</a>
                                 </td>
                             </tr>
