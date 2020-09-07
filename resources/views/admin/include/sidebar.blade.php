@@ -8,7 +8,7 @@
             <div class="left-custom-menu-adp-wrap comment-scrollbar">
                 <nav class="sidebar-nav left-sidebar-menu-pro">
                     <ul class="metismenu" id="menu1">
- 
+
                         <li>
                             <a  href="{{url('admin/home')}}" aria-expanded="false"><i class="fa fa-home "></i> Home   </a>
                         </li>
@@ -128,18 +128,13 @@
                             <a  href="{{url('admin/cmspage')}}" aria-expanded="false"><i class="fa fa-list "></i> CMS Pages  </a>
                         </li>
                         @endif
- 
-<!--                         <li>
-                            <a  href="{{url('admin/setting')}}" aria-expanded="false"><i class="fa fa-cog "></i> Settings  </a>
-                        </li> -->
+  
                         @if(VerifyAccess('cms'))
                         <li>
                             <a class="has-arrow" href="javascript:void(0)" aria-expanded="false"><i class="fa fa-file "></i> Settings</a>
                             <ul class="submenu-angle" aria-expanded="false">
                                 <li><a title="Header Page" href="{{url('admin/cms/setting')}}"> <i class="fa fa-cog"></i>  Application Setting </a></li> 
-                                <li><a title="Home Page" href="{{url('admin/cms/home')}}"> <i class="fa fa-home"></i>  Home Page Setting</a></li> 
-                                <!-- <li><a title="Information Page" href="{{url('admin/cms/information')}}"> <i class="fa fa-info-circle" aria-hidden="true"></i>  Information Tab Setting</a></li>  -->
-                                <!-- <li><a title="All Pages" href="{{url('admin/cmspage')}}"> <i class="fa fa-info-circle" aria-hidden="true"></i>  All Pages</a></li>  -->
+                                <li><a title="Home Page" href="{{url('admin/cms/home')}}"> <i class="fa fa-home"></i>  Home Page Setting</a></li>  
                             </ul>
                         </li>
                         @endif

@@ -147,7 +147,7 @@
 
      <script src="{{ asset('js/jquery-ui.js') }}"></script>
      <script src="{{ asset('js/zoomple.js') }}"></script>
- 
+
      <script type="text/javascript">
          // Wait for window load
          $(window).load(function() {
@@ -156,7 +156,7 @@
              console.log('First Loader Closed')
          });
      </script>
- 
+
 
 
      @yield('custom_scripts')
@@ -203,7 +203,7 @@
              galleryThumbs.controller.control = galleryTop;
          }
      </script>
-    
+
      <script>
          // var accesstoken= "{{@$request->accesstoken?:'Ykc5allXeG9iM04w'}}"//new18
          var accesstoken = "{{@$request->accesstoken?:'ZDJWaU5pNTJkR1J1Y3k1dVpYUT0='}}" //new18
@@ -213,12 +213,12 @@
 
      <!-- <script src="http://localhost:8001/js/wheel-api-new18.js"></script>  -->
      <script src="http://web9.vtdns.net/js/wheel-api-new18.js"></script>
- 
+
      <script src="{{ asset('js/tire_product_search.js') }}"></script>
      <script src="{{ asset('js/wheel_product_search.js') }}"></script>
      <script src="{{ asset('js/wheel_visualiser.js') }}"></script>
      <script src="{{ asset('js/common_search.js') }}"></script>
-     <script src="{{ asset('js/popImg.js') }}"></script> 
+     <script src="{{ asset('js/popImg.js') }}"></script>
 
 
 
@@ -226,4 +226,4 @@
 
  </body>
 
- </html>    
+ </html>

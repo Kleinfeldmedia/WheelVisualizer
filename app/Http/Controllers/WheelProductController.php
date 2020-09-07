@@ -739,9 +739,7 @@ class WheelProductController extends Controller
                 return redirect('/tirelist/'.base64_encode($vehicle->ChassisModels->id).'/'.base64_encode($vehicle->vehicle_id).'/'.base64_encode($wheel->id).'/'.base64_encode('shipped'));
             }else{
                 return redirect('/tirelist/'.base64_encode($vehicle->ChassisModels->id).'/'.base64_encode($vehicle->vehicle_id).'/'.base64_encode($wheel->id));
-            }
-            // return redirect('/tirelist/'.base64_encode($vehicle->ChassisModels->id).'/'.base64_encode($vehicle->vehicle_id));
-
+            } 
         }else{
                         
             // $rimsize = getWheelDiameterToRim($wheel->wheeldiameter,$wheel->wheelwidth);

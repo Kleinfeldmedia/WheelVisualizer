@@ -64,11 +64,8 @@ $is_write_access = VerifyAccess('wheelproduct','write');
                                 <tr>
                                     <th>S.No</th>
                                     <th>Brand</th>
-                                    <th>Model</th>
-                                    <!-- <th>Finish</th> -->
-                                    <th>Image</th>
-                                    <!-- <th>Meta Desc</th> -->
-                                    <!-- <th>Desc</th> -->
+                                    <th>Model</th> 
+                                    <th>Image</th> 
                                     <th> Actions</th>
                                 </tr>
                             </thead>
@@ -78,11 +75,8 @@ $is_write_access = VerifyAccess('wheelproduct','write');
                             <tr>
                                 <td>{{@$i++}}</td>
                                 <td>{{@$wheel->prodbrand}}</td>
-                                <td>{{@$wheel->prodmodel}}</td>
-                                <!-- <td>{{@$wheel->prodfinish}}</td> -->
-                                <td><img class="wheelImage" src="{{ViewImage(@$wheel->prodimage)}}" width="100px" height="100px"></td>
-                                <!-- <td><?=@$wheel->prodmetadesc?></td> -->
-                                <!-- <td class="desc"><?=@$wheel->proddesc?></td> -->
+                                <td>{{@$wheel->prodmodel}}</td> 
+                                <td><img class="wheelImage" src="{{ViewImage(@$wheel->prodimage)}}" width="100px" height="100px"></td> 
                                 <td>
                                     <a class="btn btn-default" href="{{url('/admin/wheelproduct')}}/{{base64_encode(@$wheel->id)}}/model"><i class="fa fa-eye" aria-hidden="true"></i> View Models</a>
                                 </td>
@@ -427,7 +421,7 @@ $is_write_access = VerifyAccess('wheelproduct','write');
                                     <!-- New Model Content End -->
                                 </div>
                                 <div class="modal-footer">
-                                    <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                 </div>
                             </div>
                         </div>
@@ -483,7 +477,7 @@ $is_write_access = VerifyAccess('wheelproduct','write');
                                     <!-- New Model Content End -->
                                 </div>
                                 <div class="modal-footer">
-                                    <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                 </div>
                             </div>
                         </div>
