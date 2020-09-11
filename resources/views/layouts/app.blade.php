@@ -28,8 +28,11 @@
      <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}">
      <link rel="stylesheet" href="{{ asset('css/zoomple.css') }}">
 
-     <!-- <link rel="stylesheet" href="http://localhost:8001/css/wheel-api-new18.css"> -->
-     <link rel="stylesheet" href="http://web9.vtdns.net/css/wheel-api-new18.css">
+     @if(findMyIP() != '127.0.0.1') 
+        <link rel="stylesheet" href="http://web9.vtdns.net/css/wheel-api-new18.css">
+     @else
+        <link rel="stylesheet" href="http://localhost:8001/css/wheel-api-new18.css">
+     @endif
 
 
 
@@ -110,8 +113,7 @@
          }
      </style>
 
- </head>
-
+ </head> 
  <body>
      <main>
          <div class="se-pre-con"></div>
@@ -205,14 +207,19 @@
      </script>
 
      <script>
-         // var accesstoken= "{{@$request->accesstoken?:'Ykc5allXeG9iM04w'}}"//new18
-         var accesstoken = "{{@$request->accesstoken?:'ZDJWaU5pNTJkR1J1Y3k1dVpYUT0='}}" //new18
-         // Ykc5allXeG9iM04w
-         // ZDJWaU5pNTJkR1J1Y3k1dVpYUT0=
+        if("{{findMyIP()}}" != '127.0.0.1')
+        {
+            var accesstoken = "{{@$request->accesstoken?:'ZDJWaU5pNTJkR1J1Y3k1dVpYUT0='}}" //new18
+        } else{
+            var accesstoken= "{{@$request->accesstoken?:'Ykc5allXeG9iM04w'}}"//new18
+        }
+          
      </script>
-
-     <!-- <script src="http://localhost:8001/js/wheel-api-new18.js"></script>  -->
-     <script src="http://web9.vtdns.net/js/wheel-api-new18.js"></script>
+        @if(findMyIP() != '127.0.0.1') 
+            <script src="http://web9.vtdns.net/js/wheel-api-new18.js"></script>
+        @else
+            <script src="http://localhost:8001/js/wheel-api-new18.js"></script> 
+        @endif
 
      <script src="{{ asset('js/tire_product_search.js') }}"></script>
      <script src="{{ asset('js/wheel_product_search.js') }}"></script>

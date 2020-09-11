@@ -32,10 +32,11 @@ class WheelProductController extends Controller
 
     }
     public function findVehicle($data){
+ 
                 $vehicle = Vehicle::with('Plussizes','ChassisModels','Offroads')->select('vehicle_id','vif', 'year', 'make', 'model', 'submodel', 'dr_chassis_id', 'dr_model_id', 'year_make_model_submodel', 'sort_by_vehicle_type','wheel_type','rf_lc','offroad','dually')->where('year', $data->year)
                     ->where('make', $data->make)
                     ->where('model', $data->model);
-
+                
                 if(@$data->submodel){
 
                     $submodelBody = explode('-',$data->submodel);
@@ -677,6 +678,13 @@ class WheelProductController extends Controller
 
         if($request->has('v')){
             $vehicle =Vehicle::where('vehicle_id',$request->v)->first();
+
+            
+                $data['year'] = $vehicle->year;
+                $data['make'] = $vehicle->make;
+                $data['model'] = $vehicle->model;
+                $data['submodel'] = $vehicle->submodel;
+                Session::put('user.searchByVehicle',$data);
         }
 
         $selectFields=['id','prodbrand', 'prodmodel', 'prodimage', 'wheeldiameter', 'wheelwidth', 'prodtitle','detailtitle', 'prodfinish', 'boltpattern1', 'boltpattern2', 'boltpattern3', 'offset1', 'offset2', 'hubbore', 'width', 'height', 'partno', 'price', 'price2', 'saleprice', 'qtyavail', 'salestart', 'proddesc'];
@@ -728,10 +736,9 @@ class WheelProductController extends Controller
     { 
         $selectFields=['id','prodbrand', 'prodmodel', 'prodimage', 'wheeldiameter', 'wheelwidth', 'prodtitle','detailtitle', 'prodfinish', 'boltpattern1', 'boltpattern2', 'boltpattern3', 'offset1', 'offset2', 'hubbore', 'width', 'height', 'partno', 'price', 'price2', 'saleprice', 'qtyavail', 'salestart', 'proddesc'];
 
-        $wheel = WheelProduct::where('id', $product_id)->first();
-    
+        $wheel = WheelProduct::where('id', $product_id)->first(); 
         $vehicle = $this->findVehicle((object)Session::get('user.searchByVehicle')??[]);  
-
+        // dd($vehicle);
         if($flag == 'searchByVehicle'){
             // dd((object)Session::get('user.searchByVehicle')??[]);
 
