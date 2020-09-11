@@ -20,7 +20,7 @@ class CarResource extends Controller
     */
     public function index()
     {
-        $cars = Viflist::has('CarImages')->orderBy('id','DESC')->paginate(5); 
+        $cars = Viflist::has('CarImages')->paginate(5); 
         // $cars = Viflist::with('CarImages')->paginate(10);
         $brands = Wheel::select('brand')->distinct('brand')->get();
         $makes = Viflist::select('make')->distinct('make')->get();
@@ -209,7 +209,7 @@ class CarResource extends Controller
     public function getCarImages($id)
     {
         $vif = Viflist::find($id);
-        $cars =CarImage::where('car_id',$vif->vif)->paginate(10);
+        $cars =CarImage::with('CarColor')->where('car_id',$vif->vif)->paginate(10);
         // dd($cars[0],$cars[0]->CarColor->where('code',$cars[0]->color_code)->first()->simple);
         $brands = Wheel::select('brand')->distinct('brand')->get();
         return view('admin.car.images',compact('cars','brands','vif'));
@@ -223,6 +223,7 @@ class CarResource extends Controller
      */
     public function setCarImages(Request $request,$id)
     { 
+
         try{  
 
         $this->validate($request, [
@@ -275,6 +276,7 @@ class CarResource extends Controller
      */
     public function updateCarImages(Request $request,$id)
     {  
+        // dd($request->all());
         $this->validate($request, [
             'cc' => 'required|max:255',
             'color_code' => 'required|max:255',
@@ -353,4 +355,118 @@ class CarResource extends Controller
         }   
     }
 
+
+    public function uploadcsv(Request $request){ 
+        try{  
+
+
+
+            if($request->hasFile('viflistuploadedfile') && $request->type == 'viflist' ){
+                $filename = $request->vehicleuploadedfile->getClientOriginalName();  
+                $request->vehicleuploadedfile->move(public_path('/storage/uploaded_csv'), $filename); 
+                // dd(base_path('storage/app/public/uploaded_csv/').$filename);
+                $filepath = base_path('storage/app/public/uploaded_csv/').$filename;  
+
+                if( !$fr = @fopen($filepath, "r") ){
+
+                    return back()->with('flash_error',"File Could not be read!!");
+                }
+                // $fw = fopen($out_file, "w");
+                $i=1;
+                
+                while( ($data = fgetcsv($fr, 2000000, ",")) !== FALSE ) {
+                    if($i != 1){ 
+                        if((isset($data[0])&&$data[0]!='')){ 
+                            $vif['vif'] =$data[0];
+                            $vif['org'] =$data[1];
+                            $vif['send'] =$data[2];
+                            $vif['yr'] =$data[3];
+                            $vif['make'] =$data[4];
+                            $vif['model'] =$data[5];
+                            $vif['trim'] =$data[6];
+                            $vif['drs'] =$data[7];
+                            $vif['body'] =$data[8];
+                            $vif['cab'] =$data[9];
+                            $vif['whls'] =$data[10];
+                            $vif['vin'] =$data[11];
+                            $vif['date_delivered'] =$data[12]; 
+                            Viflist::updateOrCreate(['vif' =>$vif['vif']] , $vif ); 
+                        }
+                    }
+                    $i++;
+                }
+                fclose($fr);
+                return back()->with('flash_success','Viflist Data Uploaded successfully');
+            }elseif($request->hasFile('carimagesuploadedfile') && $request->type == 'carimages' ){
+                $filename = $request->carimagesuploadedfile->getClientOriginalName();  
+                $request->carimagesuploadedfile->move(public_path('/storage/uploaded_csv'), $filename); 
+                // dd(base_path('storage/app/public/uploaded_csv/').$filename);
+                $filepath = base_path('storage/app/public/uploaded_csv/').$filename;  
+
+                if( !$fr = @fopen($filepath, "r") ){
+
+                    return back()->with('flash_error',"File Could not be read!!");
+                }
+                // $fw = fopen($out_file, "w");
+                $i=1;
+                
+                while( ($data = fgetcsv($fr, 2000000, ",")) !== FALSE ) {
+                    if($i != 1){ 
+                        if((isset($data[0])&&$data[0]!='')){ 
+                            $carimage['car_id'] =$data[0];
+                            $carimage['cc'] =$data[1];
+                            $carimage['color_code'] =$data[2];
+                            $carimage['image'] =$data[3];  
+
+                            CarImage::updateOrCreate(['car_id' =>$carimage['car_id'],'color_code' =>$carimage['color_code']] , $carimage ); 
+                        }
+
+                    }
+                    $i++;
+                }
+                fclose($fr);
+                return back()->with('flash_success','Car Images Data Uploaded successfully');
+            }elseif($request->hasFile('carcolorsuploadedfile') && $request->type == 'carcolors' ){
+                $filename = $request->carcolorsuploadedfile->getClientOriginalName();  
+                $request->carcolorsuploadedfile->move(public_path('/storage/uploaded_csv'), $filename); 
+                // dd(base_path('storage/app/public/uploaded_csv/').$filename);
+                $filepath = base_path('storage/app/public/uploaded_csv/').$filename;  
+
+                if( !$fr = @fopen($filepath, "r") ){
+
+                    return back()->with('flash_error',"File Could not be read!!");
+                }
+                // $fw = fopen($out_file, "w");
+                $i=1;
+                
+                while( ($data = fgetcsv($fr, 2000000, ",")) !== FALSE ) {
+                    if($i != 1){ 
+                        if((isset($data[0])&&$data[0]!='')){
+ 
+                            $carcolor['vif'] = $data[0]?:null;
+                            $carcolor['code'] = $data[1]?:null;
+                            $carcolor['evoxcode'] = $data[2]?:null;
+                            $carcolor['name'] = $data[3]?:null;
+                            $carcolor['rgb1'] = $data[4]?:null;
+                            $carcolor['rgb2'] = $data[5]?:null;
+                            $carcolor['simple'] = $data[6]?:null;
+                            $carcolor['shot'] = $data[7]?:null; 
+
+                            CarColor::updateOrCreate(['vif' =>$carcolor['vif'],'code' =>$carcolor['code']] , $carcolor ); 
+                        }
+                    }
+                    $i++;
+                }
+                fclose($fr);
+                return back()->with('flash_success','Car Colors Data Uploaded successfully');
+            }else{
+                return back()->with('flash_error',"File Could not be read!!");
+            }
+
+
+        }catch(Exception $e){
+            return back()->with('flash_error',$e->getMessage());
+        } 
+
+    }
 }

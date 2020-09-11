@@ -25,6 +25,7 @@
                             <thead>
                                 <tr>
                                     <th> S.No</th>
+                                    <th>Car ID </th>
                                     <th>Name </th>
                                     <th>CC </th>
                                     <th>Color</th>
@@ -36,6 +37,7 @@
 
                             <tr>
                                 <td>{{@$key+1}}</td>
+                                <td>{{@$car->car_id}} </td>
                                 <td>{{@$car->CarColor->where('code',@$car->color_code)->first()->name}}</td>
                                 <td>{{@$car->cc}} </td>
                                 <td>{{@$car->CarColor->where('code',@$car->color_code)->first()->simple}}</td>
@@ -101,10 +103,27 @@
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                                            <label for="fname">Upload Image <span class="req">*</span></label>
+                                                                             <div class="row">Uploaded  Image</div>
+
+                                                        <div class="row"> 
+                                                            <div class="col-md-6 show-image">
+                                                                    <div class="col-md-6">
+                                                                        <img id="profile-img-{{$key}}" src="{{asset($car->image)}}" style="width:100px !important;height:auto !important">
+                                                                    </div>
+
+                                                                    <div class="col-md-6">
+                                                                        <input class="delete profile-img-delete   btn btn-danger" type="button"  data-key="{{$key}}" value="Remove Image"  style="display: {{(@$user->profileimage)?'block':'none'}};" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <input type="file" class="form-control profile-img"  id="profile-img-input-{{$key}}" data-key="{{$key}}"  name="car_image" style="display: {{(@$user->profileimage)?'none':'block'}};" >
+                                                                </div>
+                                                        </div> 
+
+                                                                           <!--  <label for="fname">Upload Image <span class="req">*</span></label>
                                                                             <br>
                                                                             <input type="file" accept="image/*" name="car_image" class="car_image dropify form-control-file" aria-describedby="fileHelp" required="" data-default-file="{{asset($car->image)}}">
-                                                                            <br>
+                                                                            <br> -->
                                                                         </div>
                                                                     </div>
                                                                     <br>
@@ -131,7 +150,7 @@
                             <!-- New Model Content End -->
                             @empty
                             <tr>
-                                <td colspan="5">No Car Images found</td>
+                                <td colspan="6">No Car Images found</td>
                             </tr>
                             @endforelse
                         </table>
@@ -151,7 +170,7 @@
                                     <!-- New Model Content Start -->
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div class="product-payment-inner-st">
-                                            <form action="{{ route('admin.car.images.store', $vif->id) }}" class="dropzone dropzone-custom needsclick add-professors dz-clickable" id="demo1-upload" method="POST" enctype="multipart/form-data">
+                                            <form action="{{ route('admin.car.images.store', $vif->id) }}" class="dropzone dropzone-custom needsclick add-professors dz-clickable" id="demo1-upload" method="POST"  enctype="multipart/form-data">
                                                 {{@csrf_field()}}
                                                 <input type="hidden" name="vif" value="{{$vif->vif}}">
                                                 <ul id="myTabedu1" class="tab-review-design">
@@ -164,10 +183,10 @@
                                                                 <div class="review-content-section">
                                                                     <div id="dropzone1" class="pro-ad upload-section">
 
-                                                                        <div class="row">
+                                                                       <!--  <div class="row">
                                                                             <a class="btn btn-success add-upload">Add New</a>
                                                                             <a class="btn btn-danger remove-upload">Remove One</a>
-                                                                        </div>
+                                                                        </div> -->
                                                                         <div class="row fixed-upload-file">
 
                                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
@@ -202,7 +221,7 @@
                                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                                 <label for="fname">Upload Image <span class="req">*</span></label>
                                                                                 <br>
-                                                                                <input type="file" accept="image/*" name="car_image[]" class="car_image dropify form-control-file" aria-describedby="fileHelp" required="" data-default-file="{{old('car_image')}}">
+                                                                                <input type="file" accept="image/*" name="car_image" class="car_image dropify form-control-file" aria-describedby="fileHelp" required="" data-default-file="{{old('car_image')}}">
                                                                                 <br>
                                                                             </div>
                                                                         </div>
@@ -247,5 +266,38 @@
     $(function() {
         $(".wheelImage").popImg();
     })
+
+
+ function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = (function (input) {   
+                
+                var key = $(input).data('key');
+                return function(e){
+                    $('#profile-img-'+key).attr('src', e.target.result);
+                };
+
+            })(input); 
+            reader.readAsDataURL(input.files[0]);
+        }
+    } 
+
+    $('.profile-img').change(function(){ 
+        readURL(this); 
+        var key = $(this).data('key');
+        $('#profile-img-input-'+key).hide();
+        $('.profile-img-delete').show();
+    });
+
+    $('.profile-img-delete').click(function(){
+        var key = $(this).data('key');
+        $('#profile-img-input-'+key).show();
+        $('.profile-img-delete').hide();
+        $('#profile-img-input-'+key).val('');
+        $('#profile-img-'+key).attr('src',$('#profile-img-list-'+key).attr('src'));
+    })
+
+
 </script>
 @endsection

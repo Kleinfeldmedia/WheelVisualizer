@@ -24,13 +24,20 @@ $is_write_access = VerifyAccess('car','write');
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="product-status-wrap drp-lst">
-                    <h4>Cars List</h4>
+                    <h4>Vif List</h4>
                     <div style="text-align:right;padding-bottom: 20px">
                     @if($is_write_access)
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Add Car</button>
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Add Vif and Car</button>
+
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#csvModalViflist">Upload Viflist CSV </button>
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#csvModalCarImages">Upload Car Images CSV </button>
+
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#csvModalCarColors">Upload Car Colors CSV </button>
                     @endif
                     
-                    <a  class="btn btn-info"  href="{{url('admin/exportTable')}}?module=CarImage">Export CSV </a>
+                    <a  class="btn btn-info"  href="{{url('admin/exportTable')}}?module=Viflist">Export Viflist CSV </a>
+                    <a  class="btn btn-info"  href="{{url('admin/exportTable')}}?module=CarImage">Export Car Images CSV </a>
+                    <a  class="btn btn-info"  href="{{url('admin/exportTable')}}?module=CarColor">Export Car Colors CSV </a>
                     
                     </div>
                     <div class="asset-inner">
@@ -426,10 +433,10 @@ $is_write_access = VerifyAccess('car','write');
                                                                 <div class="review-content-section">
                                                                     <div id="dropzone1" class="pro-ad upload-section">
 
-                                                                        <div class="row">
+                                                                       <!--  <div class="row">
                                                                             <a class="btn btn-success add-upload">Add New</a>
                                                                             <a class="btn btn-danger remove-upload">Remove One</a>
-                                                                        </div>
+                                                                        </div> -->
                                                                         <div class="row fixed-upload-file">
 
                                                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
@@ -498,6 +505,176 @@ $is_write_access = VerifyAccess('car','write');
                     </div>
                     <!--New Model End  -->
 
+                    <!--  New Model Start-->
+                    <div class="modal fade" id="csvModalViflist" role="dialog">
+                        <div class="modal-dialog admin-form">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Upload Viflist CSV File</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- New Model Content Start -->
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="product-payment-inner-st"> 
+                                            <div id="myTabContent" class="tab-content custom-product-edit">
+                                                <div class="product-tab-list tab-pane fade active in" id="description2">
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <div class="review-content-section">
+                                                                <div id="dropzone1" class="pro-ad">
+
+                                                                    <form action="{{url('/admin/cars/uploadcsv')}}" class="dropzone dropzone-custom needsclick add-professors dz-clickable"  method="POST" enctype="multipart/form-data">
+                                                                        {{@csrf_field()}} 
+                                                                        <input type="hidden" name="type" value="viflist">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                <label for="viflistuploadedfile">CSV Formated File <span class="req">*</span></label>
+                                                                                <br>
+                                                                                <input type="file"  name="viflistuploadedfile"  class="dropify form-control-file" aria-describedby="fileHelp" required="">
+                                                                            </div> 
+                                                                        </div>
+                                                                        <br>
+                                                                        <div class="row">
+                                                                            <div class="col-lg-12">
+                                                                                <div class="payment-adress">
+                                                                                    <input type="submit" class="btn btn-primary waves-effect waves-light" value="Submit">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- New Model Content End -->
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--New Model End  -->
+
+                    <!--  New Model Start-->
+                    <div class="modal fade" id="csvModalCarImages" role="dialog">
+                        <div class="modal-dialog admin-form">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Upload Car Images CSV File</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- New Model Content Start -->
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="product-payment-inner-st"> 
+                                            <div id="myTabContent" class="tab-content custom-product-edit">
+                                                <div class="product-tab-list tab-pane fade active in" id="description2">
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <div class="review-content-section">
+                                                                <div id="dropzone1" class="pro-ad">
+
+                                                                    <form action="{{url('/admin/cars/uploadcsv')}}" class="dropzone dropzone-custom needsclick add-professors dz-clickable"  method="POST" enctype="multipart/form-data">
+                                                                        {{@csrf_field()}} 
+                                                                        <input type="hidden" name="type" value="carimages">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                <label for="carimagesuploadedfile">CSV Formated File <span class="req">*</span></label>
+                                                                                <br>
+                                                                                <input type="file"  name="carimagesuploadedfile"  class="dropify form-control-file" aria-describedby="fileHelp" required="">
+                                                                            </div> 
+                                                                        </div>
+                                                                        <br>
+                                                                        <div class="row">
+                                                                            <div class="col-lg-12">
+                                                                                <div class="payment-adress">
+                                                                                    <input type="submit" class="btn btn-primary waves-effect waves-light" value="Submit">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- New Model Content End -->
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--New Model End  -->
+
+                    <!--  New Model Start-->
+                    <div class="modal fade" id="csvModalCarColors" role="dialog">
+                        <div class="modal-dialog admin-form">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Upload Car Colors CSV File</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- New Model Content Start -->
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="product-payment-inner-st"> 
+                                            <div id="myTabContent" class="tab-content custom-product-edit">
+                                                <div class="product-tab-list tab-pane fade active in" id="description2">
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <div class="review-content-section">
+                                                                <div id="dropzone1" class="pro-ad">
+
+                                                                    <form action="{{url('/admin/cars/uploadcsv')}}" class="dropzone dropzone-custom needsclick add-professors dz-clickable"  method="POST" enctype="multipart/form-data">
+                                                                        {{@csrf_field()}} 
+                                                                        <input type="hidden" name="type" value="carcolors">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                <label for="carcolorsuploadedfile">CSV Formated File <span class="req">*</span></label>
+                                                                                <br>
+                                                                                <input type="file"  name="carcolorsuploadedfile"  class="dropify form-control-file" aria-describedby="fileHelp" required="">
+                                                                            </div> 
+                                                                        </div>
+                                                                        <br>
+                                                                        <div class="row">
+                                                                            <div class="col-lg-12">
+                                                                                <div class="payment-adress">
+                                                                                    <input type="submit" class="btn btn-primary waves-effect waves-light" value="Submit">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- New Model Content End -->
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--New Model End  -->
                 </div>
             </div>
         </div>

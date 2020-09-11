@@ -1,10 +1,8 @@
 <?php
 
- 
 
 Route::get('/', 'AdminController@home');
 Route::get('home', 'AdminController@home');
- 
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 Route::get('inventories/count', 'InventoryController@getUploadInventories');
@@ -15,6 +13,7 @@ Route::resource('ticket', 'Resource\TicketResource');
 Route::resource('user', 'Resource\UserResource');
 Route::resource('subadmin', 'Resource\SubadminResource');
 Route::resource('wheel', 'Resource\WheelResource');
+Route::post('wheel/uploadcsv', 'Resource\WheelResource@uploadcsv');
 Route::resource('brands', 'Resource\TireBrandsResource');
 
 
@@ -29,6 +28,7 @@ Route::resource('enquiry', 'EnquiryController');
 Route::resource('review', 'ReviewController');
 Route::resource('post', 'PostController');
 Route::resource('postcomment', 'PostCommentController');
+Route::resource('client', 'ClientSiteController');
 
 
 // Routes for Meta Keywords
@@ -54,12 +54,18 @@ Route::get('/wheelproduct/{id?}/model', 'Resource\WheelProductResource@getProduc
 
 
 // Routes for Cars Images 
-Route::resource('car', 'Resource\CarResource');
+Route::resource('car', 'Resource\CarResource'); // For VIF Table CRUD
+
+// Routes for Car Images Module
+Route::post('cars/uploadcsv', 'Resource\CarResource@uploadcsv');
 Route::get('/car/images/{id}', 'Resource\CarResource@getCarImages')->name('car.images'); 
 Route::post('/car/images/{id}', 'Resource\CarResource@setCarImages')->name('car.images.store');
 Route::patch('/car/images/{id}', 'Resource\CarResource@updateCarImages')->name('car.images.update');
 Route::delete('/car/images/{id}', 'Resource\CarResource@destroyCarImages')->name('car.images.destroy');
- 
+
+// Routes for Car Colors Module
+  
+
 
 
 // Routes for Orders pages 
