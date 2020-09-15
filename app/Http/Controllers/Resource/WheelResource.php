@@ -49,8 +49,8 @@ class WheelResource extends Controller
             'finish' => 'required|max:255',
             'wheeldiameter' => 'required|max:255',
             'wheelwidth' => 'required|max:255',
-            'image' => 'required|mimes:jpg,jpeg,png|max:5242880', 
-            'front_back_image' => 'required|mimes:jpg,jpeg,png|max:5242880', 
+            'image' => 'required|mimes:jpg,png|max:5242880', 
+            'front_back_image' => 'required|mimes:png|max:5242880', 
         ]);
         try{  
 
@@ -108,7 +108,8 @@ class WheelResource extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {   
+    {  
+        // dd($request->all());
         $this->validate($request, [
             // 'year' => 'required|max:255',
             'brand' => 'required|max:255', 
@@ -127,27 +128,17 @@ class WheelResource extends Controller
             $data = request()->except(['_token','_method']);
             $wheel = Wheel::whereid($id)->first();
             $wheel->update($data);
-            $wheel = Wheel::whereid($id)->first();
-            $imagename='';
-
-             if($request->hasFile('image')){    
+            if($request->hasFile('image') && $request->hasFile('front_back_image') ){
                 $imagename = $request->image->getClientOriginalName();  
                 $split_name = explode('.', $imagename);
                 $front_back_image = $split_name[0].'.png';
-                $request->image->move(public_path('/storage/wheels'), $imagename); 
-                $wheel->image = 'storage/wheels/'.$imagename; 
-            } 
-
-
-            if($request->hasFile('front_back_image')){ 
-                $front_back_image = str_replace('storage/wheels/', '', $wheel->image);  
+                $request->image->move(public_path('/storage/wheels'), $imagename);
                 $request->front_back_image->move(public_path('/storage/wheels/front_back'), $front_back_image); 
- 
+
+                $wheel->image = 'storage/wheels/'.$imagename;
                 $wheel->frontimage = 'storage/wheels/front_back/'.$front_back_image;
                 $wheel->rearimage = 'storage/wheels/front_back/'.$front_back_image; 
-            }
-
-           
+            } 
             $wheel->save(); 
 
             return back()->with('flash_success','Wheel Updated successfully');
@@ -172,59 +163,5 @@ class WheelResource extends Controller
         catch (Exception $e) {
             return back()->with('flash_error', 'Wheel Not Found');
         }
-    }
-
-  
-
-
-
-    public function uploadcsv(Request $request){ 
-        try{   
-            $this->validate($request, [ 
-                'wheelfile'=>'required',
-            ]); 
-
-            if($request->hasFile('wheelfile') ){
-                $filename = $request->wheelfile->getClientOriginalName();  
-                $request->wheelfile->move(public_path('/storage/wheel_file'), $filename); 
-                // dd(base_path('storage/app/public/wheel_products_file/').$filename);
-                $filepath = base_path('storage/app/public/wheel_file/').$filename;  
-
-                if( !$fr = @fopen($filepath, "r") ) die("Failed to open file");
-                // $fw = fopen($out_file, "w");
-                $i=1;
-                while( ($data = fgetcsv($fr, 2000, ",")) !== FALSE ) {
-                        if($i != 1){  
-                            $wheel['part_no'] = $data[0]?:null;
-                            $wheel['brand'] = $data[1]?:null;
-                            $wheel['style'] = $data[2]?:null;
-                            $wheel['finish'] = $data[3]?:null;
-                            $wheel['image'] = $data[4]?:null;
-                            $wheel['boldpattern1'] = $data[5]?:null;
-                            $wheel['boldpattern2'] = $data[6]?:null;
-                            $wheel['boldpattern3'] = $data[7]?:null;
-                            $wheel['offset1'] = $data[8]?:null;
-                            $wheel['offset2'] = $data[9]?:null;
-                            $wheel['simpleoffset'] = $data[10]?:null;
-                            $wheel['wheeltype'] = $data[11]?:null;
-                            $wheel['wheeldiameter'] = $data[12]?:null;
-                            $wheel['wheelwidth'] = $data[13]?:null;
-                            $wheel['hub'] = $data[14]?:null;
-                            $wheel['frontimage'] = $data[15]?:null;
-                            $wheel['rearimage'] = $data[16]?:null;
-
-                            Wheel::updateOrCreate(['part_no' =>$wheel['part_no']] , $wheel); 
-                        
-                        }
-                        $i++;
-                    }
-                fclose($fr);
-            }  
-
-            return back()->with('flash_success','Wheel Data Uploaded successfully');
-        }catch(Exception $e){
-            return back()->with('flash_error',$e->getMessage());
-        } 
-
     }
 }
