@@ -53,7 +53,7 @@ class FeedbackController extends Controller
 
                 $feedback = Feedback::create($data);  
 
-                return back()->with('success','Thanks for your comments!!');
+                return back()->with('flash_success','Thanks for your comments!!');
 
             }catch(Exception $e){
                 return back()->withInput(Input::all())->with('error',$e->getMessage());
@@ -104,10 +104,10 @@ class FeedbackController extends Controller
     {
         try {
             $feedback->delete();
-            return back()->with('sucess', 'Feedback deleted successfully');
+            return back()->with('flash_sucess', 'Feedback deleted successfully');
         } 
         catch (Exception $e) {
-            return back()->with('error', 'Feedback Not Found');
+            return back()->with('flash_error', 'Feedback Not Found');
         }
     }
 }

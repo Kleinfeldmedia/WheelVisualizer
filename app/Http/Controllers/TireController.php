@@ -36,7 +36,7 @@ class TireController extends Controller
 
         if (count($request->all()) == 0)
         {
-            $tires = $tires->take(50);
+            $tires = $tires->take(100);
         }
 
         $chassis_model = ChassisModel::find(base64_decode($chassis_model_id)) ??null;

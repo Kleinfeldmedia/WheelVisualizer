@@ -52,9 +52,9 @@ class EnquiryController extends Controller
 
                 $data = $request->except(['_token']);
                 $enquiry = Enquiry::create($data);
-                return back()->with('success','Thanks for Request... Will get back you soon!!');
+                return back()->with('flash_success','Thanks for Request... Will get back you soon!!');
         }catch(Exception $e){
-            return back()->with('error','Something Went Wrong!!');
+            return back()->with('flash_error','Something Went Wrong!!');
         }
     }
 
@@ -103,10 +103,10 @@ class EnquiryController extends Controller
        
         try {
             $enquiry->delete();
-            return back()->with('sucess', 'Enquiry deleted successfully');
+            return back()->with('flash_success', 'Enquiry deleted successfully');
         } 
         catch (Exception $e) {
-            return back()->with('error', 'Enquiry Not Found');
+            return back()->with('flash_error', 'Enquiry Not Found');
         }
     }
 }

@@ -45,23 +45,17 @@ $is_write_access = VerifyAccess('logs','write');
                     <h4>Live Report for Inventories</h4>
                     <div style="text-align:right;padding-bottom: 20px"> 
                     <!-- <a  class="btn btn-info"  href="{{url('admin/exportTable')}}?module=Order">Export CSV </a> -->
-                    
                     </div>
                     <div class="asset-inner">
                         <table id="livereportTable"> 
                               @include('admin.inventory.livedata')
-                             
                         </table>
- 
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
- <script type="text/javascript"> 
-
-</script>
+</div> 
 @endsection
 @section('custom_scripts')
 <script type="text/javascript">  
