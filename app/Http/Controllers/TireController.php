@@ -342,8 +342,9 @@ class TireController extends Controller
                 ->orderBy('price', 'ASC');
         }
 
-        $tires = $tires->take(30)->get()
-            ->unique('prodtitle');
+        $tires = $tires->get()->unique('prodtitle');
+
+        dd($tires);
 
         if (count($tires) == 0)
         {
