@@ -33,10 +33,10 @@ class TireController extends Controller
         $tires = new Tire;
 
         $tires = $tires->select('prodimage', 'id', 'prodtitle', 'detailtitle', 'tiresize', 'loadindex', 'speedrating', 'price', 'prodmodel', 'tirewidth', 'tireprofile', 'tirediameter', 'partno');
-
+        // dd(count($request->all()));
         if (count($request->all()) == 0)
         {
-            $tires = $tires->take(100);
+            $tires = $tires->where('id','<',100);
         }
 
         $chassis_model = ChassisModel::find(base64_decode($chassis_model_id)) ??null;
@@ -206,7 +206,6 @@ class TireController extends Controller
         // Tire Brands search in the Sidebar
         $countsByBrand = clone $tires;
 
-        $brands = clone $tires;
 
         if (isset($request->tirebrand) && $request->tirebrand)
         {
@@ -344,7 +343,7 @@ class TireController extends Controller
 
         $tires = $tires->get()->unique('prodtitle');
 
-        dd($tires);
+        // dd($tires);
 
         if (count($tires) == 0)
         {

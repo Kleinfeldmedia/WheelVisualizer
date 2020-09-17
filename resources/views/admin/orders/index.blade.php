@@ -12,6 +12,9 @@ $is_write_access = VerifyAccess('orders','write');
 
 
 <style type="text/css">
+  .hide{
+    display: none;
+  }
     .req {
         color: red;
     }
@@ -51,11 +54,10 @@ $is_write_access = VerifyAccess('orders','write');
                             <thead>
                                 <tr>
                                     <th>S.No</th>
-                                    <th>Order # </th>
+                                    <th>Invoice # </th>
                                     <th>Name</th>
                                     <th>No.Of Items</th>
-                                    <th>Billing Address</th>
-                                    <th>Shipping Address</th>
+                                    <th>Billing / Shipping Address</th>
                                     <th>Vehicle</th>
                                     <th>Notes</th>
                                     <!-- <th>Subtotal</th> -->
@@ -64,8 +66,7 @@ $is_write_access = VerifyAccess('orders','write');
                                     <th>Shipping</th>
                                     <th>Total</th>
                                     <th>Payment Status</th>
-                                    <th>Order Status</th>
-                                    <th>Ordered At</th>
+                                    <th>Order Status</th> 
                                 </tr>
                             </thead> 
                             @forelse(@$orders as $key => $order) 
@@ -125,53 +126,68 @@ $is_write_access = VerifyAccess('orders','write');
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
                                                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                                    <h4 class="modal-title text-left">Billing Address</h4>
+                                                                    <h4 class="modal-title text-left">Billing / Shipping Address</h4>
                                                                 </div>
                                                                 <div class="modal-body">
                                                                 <h4 class="modal-title">
+                                                                  <?php $is_shipping=($order->same_shipping == 'yes')?'hide':''; ?>  
                                                                         <table class="table table-bordered"> 
+                                                                          <tr>
+                                                                            <th>#</th>
+                                                                            <th>Billing Address</th> 
+                                                                            <th class="{{$is_shipping}}">Shipping Address</th> 
+                                                                          </tr>
                                                                           <tr>
                                                                             <td>First Name</td>
                                                                             <td>{{@$order->firstname}}</td> 
+                                                                            <td class="{{$is_shipping}}">{{@$order->shipping_firstname}}</td> 
                                                                           </tr>
                                                                           <tr>
                                                                             <td>Last Name</td>
                                                                             <td>{{@$order->lastname}}</td> 
+                                                                            <td class="{{$is_shipping}}">{{@$order->shipping_lastname}}</td> 
                                                                           </tr>
                                                                           <tr>
                                                                             <td>Company Name</td>
                                                                             <td>{{@$order->companyname}}</td> 
+                                                                            <td class="{{$is_shipping}}">{{@$order->shipping_companyname}}</td> 
                                                                           </tr>
                                                                           <tr>
                                                                             <td>Email</td>
                                                                             <td>{{@$order->email}}</td> 
+                                                                            <td class="{{$is_shipping}}">{{@$order->shipping_email}}</td> 
                                                                           </tr>
                                                                           <tr>
                                                                             <td>Day Phone</td>
                                                                             <td>{{@$order->dayphone}}</td> 
+                                                                            <td class="{{$is_shipping}}">{{@$order->shipping_dayphone}}</td> 
                                                                           </tr>
 
                                                                           <tr>
                                                                             <td>Cell Phone</td>
                                                                             <td>{{@$order->cellphone}}</td> 
+                                                                            <td class="{{$is_shipping}}">{{@$order->shipping_cellphone}}</td> 
                                                                           </tr>
 
                                                                           <tr>
                                                                             <td>Address</td>
                                                                             <td>{{@$order->address}}<br>{{@$order->address2}}</td> 
+                                                                            <td class="{{$is_shipping}}">{{@$order->shipping_address}}<br>{{@$order->shipping_address2}}</td> 
                                                                           </tr>
 
                                                                           <tr>
                                                                             <td>State</td>
                                                                             <td>{{@$order->state}}</td> 
+                                                                            <td class="{{$is_shipping}}">{{@$order->shipping_state}}</td> 
                                                                           </tr>
 
                                                                           <tr>
                                                                             <td>Zip</td>
                                                                             <td>{{@$order->zip}}</td> 
+                                                                            <td class="{{$is_shipping}}">{{@$order->shipping_zip}}</td> 
                                                                           </tr>
                                                                         </table>
-                                                                </h4> 
+                                                                </h4>  
                                                                         <div class="form-group has-success has-feedback text-center">
                                                                             <button class="btn btn-info btn-close" type="button" data-dismiss="modal" >Close</button>
                                                                         </div>
@@ -180,75 +196,7 @@ $is_write_access = VerifyAccess('orders','write');
                                                         </div>
                                                     </div>
                                                     <!-- Model End  -->
-                                </td>
-                                <td class="td-center">
-                                  @if(@$order->same_shipping != 'yes')
-                                                    <button type="button" class="btn btn-info"  data-toggle="modal" data-target="#shipping{{$key}}">View</button>
-                                  @else
-                                    Same as Billing Address
-                                  @endif
-                                                    <!-- model Start -->
-                                                    <div class="modal fade " id="shipping{{$key}}" role="dialog">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                                    <h4 class="modal-title text-left">Shipping Address</h4>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                <h4 class="modal-title">
-                                                                        <table class="table table-bordered"> 
-                                                                          <tr>
-                                                                            <td>First Name</td>
-                                                                            <td>{{@$order->shipping_firstname}}</td> 
-                                                                          </tr>
-                                                                          <tr>
-                                                                            <td>Last Name</td>
-                                                                            <td>{{@$order->shipping_lastname}}</td> 
-                                                                          </tr>
-                                                                          <tr>
-                                                                            <td>Company Name</td>
-                                                                            <td>{{@$order->shipping_companyname}}</td> 
-                                                                          </tr>
-                                                                          <tr>
-                                                                            <td>Email</td>
-                                                                            <td>{{@$order->shipping_email}}</td> 
-                                                                          </tr>
-                                                                          <tr>
-                                                                            <td>Day Phone</td>
-                                                                            <td>{{@$order->shipping_dayphone}}</td> 
-                                                                          </tr>
-
-                                                                          <tr>
-                                                                            <td>Cell Phone</td>
-                                                                            <td>{{@$order->shipping_cellphone}}</td> 
-                                                                          </tr>
-
-                                                                          <tr>
-                                                                            <td>Address</td>
-                                                                            <td>{{@$order->shipping_address}}<br>{{@$order->shipping_address2}}</td> 
-                                                                          </tr>
-
-                                                                          <tr>
-                                                                            <td>State</td>
-                                                                            <td>{{@$order->shipping_state}}</td> 
-                                                                          </tr>
-
-                                                                          <tr>
-                                                                            <td>Zip</td>
-                                                                            <td>{{@$order->shipping_zip}}</td> 
-                                                                          </tr>
-                                                                        </table>
-                                                                </h4> 
-                                                                        <div class="form-group has-success has-feedback text-center">
-                                                                            <button class="btn btn-info btn-close" type="button" data-dismiss="modal" >Close</button>
-                                                                        </div>
-                                                                  </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- Model End  -->
-                                </td>
+                                </td> 
                                 <td>
                                                     <button type="button" class="btn btn-info"  data-toggle="modal" data-target="#vehicle{{$key}}">View</button>
                                                     <!-- model Start -->
@@ -309,12 +257,11 @@ Modified Please Explain :
                                   @else
                                   {{$order->status}}
                                   @endif
-                                </td>
-                                <td>{{@$order->created_at}}</td>
+                                </td> 
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="5">No Orders found</td>
+                                <td colspan="3">No Orders found</td>
                             </tr>
                             @endforelse
                         </table>
