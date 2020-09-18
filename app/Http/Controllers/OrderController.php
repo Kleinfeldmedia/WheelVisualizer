@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Order;
 use App\OrderItem;
+use App\OrderStatus;
 use App\Tire;
 use App\WheelProduct;
 use Illuminate\Http\Request;
@@ -118,6 +119,13 @@ class OrderController extends Controller
 
                 $updateOrder['ordernumber'] = getOrderNumber($order->id); 
 
+
+                OrderStatus::create([
+                    "orderid" => $order->id,
+                    "status" => 'ORDERED'
+                ]);
+
+
                 $order->update($updateOrder);
 
                 Session::put('cart',null);
@@ -167,6 +175,10 @@ class OrderController extends Controller
         if($order != null){
             $order->status=$request->status;
             $order->save();
+            OrderStatus::create([
+                'status'=>$request->status,
+                'orderid'=>$order->id,
+            ]);
             return ['status' => true,'msg'=>'Status Updated Successfully!!'];
         }else{
 

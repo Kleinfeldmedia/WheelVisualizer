@@ -641,13 +641,13 @@ function MetaViewer($page='Home',$customData=[]){
 
 function OrderStatus($status='',$condition=''){     
 	$list  = array(
-				'-1'=>'RETURNED',
-				'0'=>'CANCELLED',
-				'1'=>'ORDERED',
-				'2'=>'PROCESSING',
-				'3'=>'PRODUCTION',
-				'4'=>'SHIPPED',
-				'5'=>'DELIVERED',
+				'RETURNED',
+				'CANCELLED',
+				'ORDERED',
+				'PROCESSING',
+				'PRODUCTION',
+				'SHIPPED',
+				'DELIVERED',
 			);
 
 	if($status !=''){

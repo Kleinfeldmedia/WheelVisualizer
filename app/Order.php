@@ -20,6 +20,11 @@ class Order extends Model
 	    return $this->hasMany('App\OrderItem','orderid');
 	}
 
+
+	public function OrderStatuses() {
+	    return $this->hasMany('App\OrderStatus','orderid');
+	}
+
 	public function User() {
 	    return $this->belongsTo('App\User','userid');
 	}
