@@ -641,19 +641,26 @@ function MetaViewer($page='Home',$customData=[]){
 
 function OrderStatus($status='',$condition='',$view=''){     
 	$list  = array(
-				'CANCELLED',
-				'ORDERED',
-				'PROCESSING',
-				'PRODUCTION',
-				'SHIPPED',
-				'DELIVERED',
-				'RETURNED',
+				'0'=>'CANCELLED',
+				'1'=>'ORDERED',
+				'2'=>'PROCESSING',
+				'3'=>'PRODUCTION',
+				'4'=>'SHIPPED',
+				'5'=>'DELIVERED',
+				'6'=>'RETURNED',
 			);
 
 	if($status !=''){
 		if($condition!=''){
 			if($condition == 'track'){
-				return array_slice($list, array_search($status, array_keys($list)));
+				if($status != '0'){
+					unset($list[0]); 
+				}
+				if($status != '6'){
+					unset($list[6]); 
+				}				
+				return $list;
+				// return array_slice($list, array_search($status, array_keys($list)));
 			}
 			elseif($condition == 'greater'){
 				return array_slice($list, array_search($status, array_keys($list)));

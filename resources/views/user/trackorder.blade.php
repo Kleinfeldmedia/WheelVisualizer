@@ -1,4 +1,4 @@
-@extends('layouts.app') @section('shop_by_vehicle_css')
+@extends('user.layouts.app') @section('shop_by_vehicle_css')
 <link rel="stylesheet" href="{{ asset('css/wheels.css') }}"> 
 
 @endsection 
@@ -132,12 +132,7 @@ ol.progtrckr li.progtrckr-todo:before {
     height: 372px;
     }
 
-</style>
-
-<br>
-
-@include('include.sizelinks')
-
+</style> 
 <!-- Contact Us Section Start -->
 <section id="contact-us" class="contact-page">
   <div class="container">
@@ -174,7 +169,7 @@ ol.progtrckr li.progtrckr-todo:before {
                     <div class="col-lg-12">
                         <div class="form-group">
                             <ol class="progtrckr" data-progtrckr-steps="5">
-                                @foreach(@OrderStatus($order->status,'all') as $key => $status)
+                                @foreach(@OrderStatus($order->status,'track') as $key => $status) 
                                 <li class="progtrckr-{{$order->status >= $key ?'done':'todo'}}">{{$status}}</li> 
                                 @endforeach
 
