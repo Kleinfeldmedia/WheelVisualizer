@@ -255,7 +255,7 @@ Modified Please Explain :
                                                             </select>
                                                         <!-- </div> -->
                                   @else
-                                  {{$order->status}}
+                                  {{@OrderStatus($order->status,'greater')}}
                                   @endif
                                 </td> 
                             </tr>

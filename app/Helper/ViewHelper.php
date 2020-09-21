@@ -639,20 +639,23 @@ function MetaViewer($page='Home',$customData=[]){
 
 }
 
-function OrderStatus($status='',$condition=''){     
+function OrderStatus($status='',$condition='',$view=''){     
 	$list  = array(
-				'RETURNED',
 				'CANCELLED',
 				'ORDERED',
 				'PROCESSING',
 				'PRODUCTION',
 				'SHIPPED',
 				'DELIVERED',
+				'RETURNED',
 			);
 
 	if($status !=''){
 		if($condition!=''){
-			if($condition == 'greater'){
+			if($condition == 'track'){
+				return array_slice($list, array_search($status, array_keys($list)));
+			}
+			elseif($condition == 'greater'){
 				return array_slice($list, array_search($status, array_keys($list)));
 			}elseif($condition == 'all'){
 				return $list;

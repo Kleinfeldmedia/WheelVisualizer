@@ -225,12 +225,18 @@ class HomeController extends Controller
     {
         return view('user.orderstatus');
     }
-    public function vieworderstatus($orderid = '')
+    public function vieworder($orderid = '')
     {
         $orders = Order::with('OrderItems')->where('id', base64_decode($orderid))->get();
         // dd($order);
-        return view('user.vieworderstatus', compact('orders'));
+        return view('user.vieworder', compact('orders'));
     }
+    public function trackorder($orderid = '')
+    {
+        $order = Order::with('OrderItems')->where('id', base64_decode($orderid))->first();
+        // dd($order);
+        return view('user.trackorder', compact('order'));
+    } 
     public function checkorderstatus(Request $request)
     {
 
@@ -252,7 +258,7 @@ class HomeController extends Controller
                 }
                 else
                 {
-                    return redirect('/vieworderstatus/' . base64_encode($order->id));
+                    return redirect('/vieworder/' . base64_encode($order->id));
                 }
             }
             else

@@ -54,7 +54,8 @@ Route::get('/orderstatus', 'HomeController@orderstatus')->name('orderstatus');
 Route::get('/guest/orderstatus', 'HomeController@guestorderstatus')->name('guestorderstatus');
 
 Route::post('/orderstatus', 'HomeController@checkorderstatus')->name('checkorderstatus');
-Route::get('/vieworderstatus/{orderid}', 'HomeController@vieworderstatus')->name('vieworderstatus');
+Route::get('/vieworder/{orderid}', 'HomeController@vieworder')->name('vieworder');
+Route::get('/trackorder/{orderid}', 'HomeController@trackorder')->name('trackorder');
 
 // Route::get('/dashboard', 'HomeController@index')->name('home');
 Route::get('/newsletter', 'HomeController@newsletter')->name('newsletter');
