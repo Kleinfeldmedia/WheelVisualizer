@@ -8,6 +8,8 @@ use App\WheelProduct;
 use App\Tire;
 use App\Dropshipper;
 use App\Inventory;
+use App\UserCart;
+use Auth;
 
 use App\Http\Controllers\ZipcodeController as Zipcode;
 use Ixudra\Curl\Facades\Curl;
@@ -21,15 +23,19 @@ class CartController extends Controller
      */
     public function index()
     {   
-        $cart = Session::get('cart')?:[];
+
+        $user = Auth::user();
+        $cart = UserCart::where('userid',$user->id)->get()->toArray();
+        
+        // $cart = Session::get('cart')?:[];
         // dd($cart);
         $cartData=$cart;
         foreach ($cart as $key => $item) {
-            if($item['type']=='wheel'){
-                $cartData[$key]['data']=WheelProduct::find($item['id']);
+            if($item['producttype']=='wheel'){
+                $cartData[$key]['data']=WheelProduct::find($item['productid']);
             }
-            if($item['type']=='tire'){
-                $cartData[$key]['data']=Tire::find($item['id']);
+            if($item['producttype']=='tire'){
+                $cartData[$key]['data']=Tire::find($item['productid']);
             }
         }
 
@@ -57,21 +63,20 @@ class CartController extends Controller
 
         $msg = '';
 
-        $cart = Session::get('cart')??[];
+        $user = Auth::user();
+        $cart = UserCart::where('userid',$user->id)->get()->toArray();
+
         $flag=0;
         foreach ($cart as $key => $item) {
 
-            if($item['id'] == $request->productid && $item['type'] == $request->prodtype){
+            if($item['productid'] == $request->productid && $item['producttype'] == $request->prodtype){
                 $flag=1;
-
-
-
-                $cart[$key]= array(
-                    "id" => $request->productid,
-                    "type" => $request->prodtype,
-                    "qty" => $request->qty,
-                    "price" => $request->price,
-                );
+                $itemcart = UserCart::where('id',$item['id'])->first();
+                $itemcart->productid =  $request->productid;
+                $itemcart->producttype =  $request->prodtype;
+                $itemcart->qty =  $request->qty;
+                $itemcart->price =  $request->price;
+                $itemcart->save();
                 break;
             }
         }
@@ -93,12 +98,13 @@ class CartController extends Controller
                 // $inventories = Inventory::whereIn('location_name',$dropshipper_codes)->where('partno',$product->partno)->get();
                 // dd(count($inventories) > 0 );
                 // if(count($inventories) > 0 ){
-                    array_push($cart, array(
-                        "id" => $request->productid,
-                        "type" => $request->prodtype,
-                        "qty" => $request->qty,
-                        "price" => $request->price,
-                    ));
+
+                $itemcart = new UserCart;
+                $itemcart->productid =  $request->productid;
+                $itemcart->producttype =  $request->prodtype;
+                $itemcart->qty =  $request->qty;
+                $itemcart->price =  $request->price;
+                $itemcart->save();
                 // }else{
                 //     $msg = '<br><b>This Product does not available near your location based on your zipcode. <br> Choose another product or Change the zipcode </b><br>'; 
                 //     return ['status'=>'failed','message'=>$msg];
@@ -107,7 +113,7 @@ class CartController extends Controller
 
             }
         }
-        Session::put('cart', $cart);
+        // Session::put('cart', $cart);
 
         if(Session::get('user.packagetype') == 'wheeltirepackage' && $request->prodtype == 'tire'){
                 $msg .= '<br><b>This completes your Wheel and Tire Package, which will come mounted and balanced, ready to be installed on your vehicle</b><br>'; 
