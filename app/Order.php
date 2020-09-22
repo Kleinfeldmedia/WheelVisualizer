@@ -22,7 +22,7 @@ class Order extends Model
 
 
 	public function OrderStatuses() {
-	    return $this->hasMany('App\OrderStatus','orderid');
+	    return $this->hasMany('App\OrderStatus','orderid')->select('status','created_at')->distinct('status');
 	}
 
 	public function User() {

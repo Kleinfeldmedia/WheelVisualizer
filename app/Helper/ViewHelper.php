@@ -641,23 +641,23 @@ function MetaViewer($page='Home',$customData=[]){
 
 function OrderStatus($status='',$condition='',$view=''){     
 	$list  = array(
-				'0'=>'CANCELLED',
-				'1'=>'ORDERED',
-				'2'=>'PROCESSING',
-				'3'=>'PRODUCTION',
-				'4'=>'SHIPPED',
-				'5'=>'DELIVERED',
-				'6'=>'RETURNED',
+				'ORDERED'=>'ORDERED',
+				'PROCESSING'=>'PROCESSING',
+				'PRODUCTION'=>'PRODUCTION',
+				'SHIPPED'=>'SHIPPED',
+				'DELIVERED'=>'DELIVERED',
+				'RETURNED'=>'RETURNED',
+				'CANCELLED'=>'CANCELLED',
 			);
 
 	if($status !=''){
 		if($condition!=''){
 			if($condition == 'track'){
-				if($status != '0'){
-					unset($list[0]); 
+				if($status != 'RETURNED'){
+					unset($list['RETURNED']); 
 				}
-				if($status != '6'){
-					unset($list[6]); 
+				if($status != 'CANCELLED'){
+					unset($list['CANCELLED']); 
 				}				
 				return $list;
 				// return array_slice($list, array_search($status, array_keys($list)));

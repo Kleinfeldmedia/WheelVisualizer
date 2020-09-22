@@ -248,9 +248,9 @@ Modified Please Explain :
                                   @if($is_write_access)
 
                                                         <!-- <div class="dropdown"> -->
-                                                            <select  name="order_status[]" class="form-group form-control order_status" data-order_id="{{@$order->id}}"> 
+                                                            <select  name="order_status[]" class="form-group form-control order_status" data-order_id="{{@$order->id}}" data-invoice="{{@$order->ordernumber}}"> 
                                                                 @foreach(OrderStatus() as $orderKey => $status)
-                                                                <option value="{{$orderKey}}" {{($order->status == $orderKey)?'selected':''}}>{{$status}}</option>
+                                                                <option value="{{$status}}" {{($order->status == $status)?'selected':''}}>{{$status}}</option>
                                                                 @endforeach
                                                             </select>
                                                         <!-- </div> -->
@@ -276,15 +276,22 @@ Modified Please Explain :
 @endsection
 @section('custom_scripts')
 <script type="text/javascript">
-
+$('.order_status').each(function() {
+    //Store old value
+    $(this).data('lastValue', $(this).val());
+});
 $(".order_status").change(function(){
+  var lastStatus = $(this).data('lastValue');
   var status = $(this).val();  
-
   var order_id = $(this).data('order_id');
+  var invoice = $(this).data('invoice');
+  var alertMsg = "Are you sure to change the status for Invoice : "+invoice+" to '"+status+"'";
+  if(confirm(alertMsg)){
         $.ajax({
             url: "/admin/order/update/"+order_id,
             data:{"status":status  }, 
             success: function(result){  
+              alert(result.msg);
                 // console.log(typeof result)
                  $('#custom-msg').html(`
                   <div class="alert alert-success">
@@ -298,6 +305,11 @@ $(".order_status").change(function(){
                     // $loading.fadeOut("slow");
             }
         });  
+  }else{
+
+        $(this).val(lastStatus);
+  }
+     
 });
 
     

@@ -173,12 +173,19 @@ class OrderController extends Controller
     { 
 
         if($order != null){
-            $order->status=$request->status;
-            $order->save();
-            OrderStatus::create([
-                'status'=>$request->status,
-                'orderid'=>$order->id,
-            ]);
+
+            if(in_array($request->status, $order->OrderStatuses()->pluck('status')->toArray())){
+
+                return ['status' => true,'msg'=>'Status Already Updated!'];
+            }else{
+
+                $order->status=$request->status;
+                $order->save();
+                OrderStatus::create([
+                    'status'=>$request->status,
+                    'orderid'=>$order->id,
+                ]);
+            }
             return ['status' => true,'msg'=>'Status Updated Successfully!!'];
         }else{
 

@@ -272,7 +272,8 @@ Modified Please Explain :
                                 <td>{{roundCurrency(@$order->total)}}</td>
                                 <td>{{@$order->payment_status?'Paid':'Not Paid'}}</td> 
                                 <td>{{@$order->status}}</td>
-                                <td>{{@$order->created_at}}</td>
+                                
+                                <td><a href="{{url('trackorder')}}/{{base64_encode($order->id)}}" class="btn btn-info"> Track Order</a></td>
                             </tr>
                             @empty
                             <tr>
