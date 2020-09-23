@@ -25,9 +25,13 @@ class CartController extends Controller
     {   
 
         $user = Auth::user();
-        $cart = UserCart::where('userid',$user->id)->get()->toArray();
-        
-        // $cart = Session::get('cart')?:[];
+        if($user != null){
+
+            $cart = UserCart::where('userid',$user->id)->get()->toArray();
+        }else{
+
+            $cart = Session::get('cart')?:[];
+        }
         // dd($cart);
         $cartData=$cart;
         foreach ($cart as $key => $item) {
@@ -64,7 +68,13 @@ class CartController extends Controller
         $msg = '';
 
         $user = Auth::user();
-        $cart = UserCart::where('userid',$user->id)->get()->toArray();
+        if($user != null){
+
+            $cart = UserCart::where('userid',$user->id)->get()->toArray();
+        }else{
+
+            $cart = Session::get('cart')?:[];
+        }
 
         $flag=0;
         foreach ($cart as $key => $item) {
@@ -163,7 +173,18 @@ class CartController extends Controller
      */
     public function update(Request $request)
     {
-        $cart = Session::get('cart');
+
+
+        $user = Auth::user();
+        if($user != null){
+
+            $cart = UserCart::where('userid',$user->id)->get()->toArray();
+        }else{
+
+            $cart = Session::get('cart')?:[];
+        }
+
+         
         // dd($cart);
         foreach ($cart as $key => $item) {
             if($item['id'] == $request->productid && $item['type'] == $request->prodtype){

@@ -247,7 +247,7 @@
                         <?php $itemData = $item['data']; ?>
                   <tr class="row{{$itemKey}}">
                     <td class="shopping-cart-image">
-                        @if($item['type']=='wheel')
+                        @if($item['producttype']=='wheel')
                             <img src="{{ViewWheelProductImage(@$itemData->prodimage)}}" class="shop-img">
                         @else
                             <img src="{{ViewTireImage(@$itemData->prodimage)}}" class="shop-img">
@@ -258,7 +258,7 @@
                         <div class="form-group product-quantity">
                             <input type="number" name="quantity[]" value="{{@$item['qty']}}" size="2" class="form-control quantity" data-key="{{$itemKey}}" min="1" max="8">
                             <input type="hidden" name="productid[]" class="productid" value="{{$itemData->id}}">
-                            <input type="hidden" name="prodtype[]"  class="prodtype" value="{{@$item['type']}}">
+                            <input type="hidden" name="prodtype[]"  class="prodtype" value="{{@$item['producttype']}}">
                         </div>
                       </div>
                     </td>
@@ -266,7 +266,7 @@
                       <div class="shop-mar">
                         <h1>{{$itemData->partno}}</h1>
                         <h2>{{$itemData->detailtitle}}</h2>
-                        <span><a href="{{url('/removeItem/')}}/{{@$item['type']}}/{{@$item['id']}}">Remove</a></span>
+                        <span><a href="{{url('/removeItem/')}}/{{@$item['producttype']}}/{{@$item['productid']}}">Remove</a></span>
                       </div>
                     </td>
                     <td><div class="shop-mar"><h1 class="eachprice" data-price="{{$itemData->price}}" >{{roundCurrency($itemData->price)}}</h1></div></td>
