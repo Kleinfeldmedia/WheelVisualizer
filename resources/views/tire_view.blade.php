@@ -1465,10 +1465,10 @@ $('.spinner .btn:last-of-type').on('click', function() {
         var modelid="#TireProductModal";
         var productid = $(this).data('productid');
         var price = $(this).data('price'); 
-        var prodtype ='tire';
+        var producttype ='tire';
         var modalMsg = "Qty: "+qty+", "+$('.tire-detail-title').text()+" "+price+"/ea";
 
-        $.ajax({url: "/addToCart",data:{'qty':qty,'productid':productid,'prodtype':prodtype,'price':price}, success: function(result){
+        $.ajax({url: "/addToCart",data:{'qty':qty,'productid':productid,'producttype':producttype,'price':price}, success: function(result){
             if(result['status'] =='success'){
                 $(modelid).find('.modal-msg').html(result['message']+'<br>'+modalMsg);
                 $(modelid).modal("show");
@@ -1539,7 +1539,7 @@ $('.spinner .btn:last-of-type').on('click', function() {
                 // var value = $('#ratings').val(); //retrieve array
                 // value = JSON.parse(value);
                 // console.log(value)
-                // var prodtype = 'wheel'; 
+                // var producttype = 'wheel'; 
 
                 
             // }

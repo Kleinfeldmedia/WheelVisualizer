@@ -856,7 +856,7 @@
         var productid = $(this).data('productid');
         var producttitle = $(this).data('producttitle');
         var price = $(this).data('price');
-        var prodtype = 'tire';
+        var producttype = 'tire';
         var modalMsg = "Qty: " + qty + ", " + producttitle + " " + price + "/ea";
 
         $.ajax({
@@ -864,7 +864,7 @@
             data: {
                 'qty': qty,
                 'productid': productid,
-                'prodtype': prodtype,
+                'producttype': producttype,
                 'price': price
             },
             success: function(result) {

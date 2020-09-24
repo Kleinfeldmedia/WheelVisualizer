@@ -20,10 +20,10 @@
         }
     }
 
-    function updateCart(qty,productid,prodtype){
+    function updateCart(qty,productid,producttype){
         // $(".se-pre-con").show(); 
-        console.log(qty,productid,prodtype)
-        $.ajax({url: "/updateCart",data:{'qty':qty,'productid':productid,'prodtype':prodtype}, success: function(result){
+        console.log(qty,productid,producttype)
+        $.ajax({url: "/updateCart",data:{'qty':qty,'productid':productid,'producttype':producttype}, success: function(result){
             if(result =='success'){
                 // $(modelid).find('.modal-msg').text(modalMsg);
                 // $(modelid).modal("show");
@@ -43,11 +43,11 @@
         }
         var key = $(this).data('key');
         var productid =  $('.row'+key).find('.productid').val();
-        var prodtype = $('.row'+key).find('.prodtype').val();
+        var producttype = $('.row'+key).find('.producttype').val();
         var price = $('.row'+key).find('.eachprice').data('price') * qty;
         text =  "$"+price.toFixed(2);
         $('.row'+key).find('.eachtotal').text(text);
-        updateCart(qty,productid,prodtype);
+        updateCart(qty,productid,producttype);
         calculateTotal();
 
 

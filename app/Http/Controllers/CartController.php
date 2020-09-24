@@ -68,25 +68,46 @@ class CartController extends Controller
         $msg = '';
 
         $user = Auth::user();
+
+
+        $flag=0;
+
+
         if($user != null){
 
             $cart = UserCart::where('userid',$user->id)->get()->toArray();
         }else{
 
-            $cart = Session::get('cart')?:[];
-        }
-
-        $flag=0;
+            $cart = Session::get('cart')??[];
+        } 
         foreach ($cart as $key => $item) {
 
-            if($item['productid'] == $request->productid && $item['producttype'] == $request->prodtype){
+            if($item['productid'] == $request->productid && $item['producttype'] == $request->producttype){
                 $flag=1;
-                $itemcart = UserCart::where('id',$item['id'])->first();
-                $itemcart->productid =  $request->productid;
-                $itemcart->producttype =  $request->prodtype;
-                $itemcart->qty =  $request->qty;
-                $itemcart->price =  $request->price;
-                $itemcart->save();
+
+        
+            if($user != null){
+
+                    $itemcart = UserCart::where('id',$item['id'])->first();
+                    $itemcart->productid =  $request->productid;
+                    $itemcart->producttype =  $request->producttype;
+                    $itemcart->qty =  $request->qty;
+                    $itemcart->price =  $request->price;
+                    $itemcart->save();
+            }else{
+
+                    $cart[$key]= array(
+                        "productid" => $request->productid,
+                        "producttype" => $request->producttype,
+                        "qty" => $request->qty,
+                        "price" => $request->price,
+                    );
+                    Session::put('cart', $cart);
+            }
+
+
+
+
                 break;
             }
         }
@@ -94,42 +115,41 @@ class CartController extends Controller
             if($request->productid != null ){ 
 
 
-                if($request->prodtype=='wheel'){
-                    $product =WheelProduct::find($request->productid);
-                }
-                if($request->prodtype=='tire'){
-                    $product =Tire::find($request->productid);
-                } 
+                // if($request->producttype=='wheel'){
+                //     $product =WheelProduct::find($request->productid);
+                // }
+                // if($request->producttype=='tire'){
+                //     $product =Tire::find($request->productid);
+                // } 
  
                 $zipcode = \Session::get('user.zipcode');
 
-                // $dropshipper_codes = Dropshipper::where('zip',$zipcode)->pluck('code');
-
-                // $inventories = Inventory::whereIn('location_name',$dropshipper_codes)->where('partno',$product->partno)->get();
-                // dd(count($inventories) > 0 );
-                // if(count($inventories) > 0 ){
-
-                $itemcart = new UserCart;
-                $itemcart->productid =  $request->productid;
-                $itemcart->producttype =  $request->prodtype;
-                $itemcart->qty =  $request->qty;
-                $itemcart->price =  $request->price;
-                $itemcart->save();
-                // }else{
-                //     $msg = '<br><b>This Product does not available near your location based on your zipcode. <br> Choose another product or Change the zipcode </b><br>'; 
-                //     return ['status'=>'failed','message'=>$msg];
-                // }
-
-
+                 
+                if($user != null){
+                    $itemcart = new UserCart;
+                    $itemcart->userid= $user->id;
+                    $itemcart->productid =  $request->productid;
+                    $itemcart->producttype =  $request->producttype;
+                    $itemcart->qty =  $request->qty;
+                    $itemcart->price =  $request->price;
+                    $itemcart->save();
+                }else{
+                    array_push($cart, array(
+                        "productid" => $request->productid,
+                        "producttype" => $request->producttype,
+                        "qty" => $request->qty,
+                        "price" => $request->price,
+                    ));
+                    Session::put('cart', $cart);
+                }
             }
         }
-        // Session::put('cart', $cart);
 
-        if(Session::get('user.packagetype') == 'wheeltirepackage' && $request->prodtype == 'tire'){
+        if(Session::get('user.packagetype') == 'wheeltirepackage' && $request->producttype == 'tire'){
                 $msg .= '<br><b>This completes your Wheel and Tire Package, which will come mounted and balanced, ready to be installed on your vehicle</b><br>'; 
         }
 
-        if(Session::get('user.packagetype') == 'shippedpackage' && $request->prodtype == 'tire'){
+        if(Session::get('user.packagetype') == 'shippedpackage' && $request->producttype == 'tire'){
                 $msg .= '<br><b>This completes your Wheel and Tire Combo. Your wheels and tires will not come mounted together. Please make arrangements to have them properly mounted and balanced</b><br>'; 
         }
 
@@ -184,10 +204,10 @@ class CartController extends Controller
             $cart = Session::get('cart')?:[];
         }
 
-         
+
         // dd($cart);
         foreach ($cart as $key => $item) {
-            if($item['id'] == $request->productid && $item['type'] == $request->prodtype){
+            if($item['productid'] == $request->productid && $item['producttype'] == $request->producttype){
                 $flag=1;
                 $cart[$key]['qty']= $request->qty;
                 Session::put('cart', $cart);
@@ -208,7 +228,7 @@ class CartController extends Controller
     {
         $cart = Session::get('cart');
         foreach ($cart as $key => $item) {
-            if($item['id'] == $id && $item['type'] == $type){
+            if($item['productid'] == $id && $item['producttype'] == $type){
                 unset($cart[$key]);
             }
         }
@@ -228,6 +248,27 @@ class CartController extends Controller
     public function getCartCount(Request $cartdata)
     {
         $cart = Session::get('cart')??[];
+        $user = Auth::user();
+
+        if( $user && !empty($cart)){
+
+            foreach ($cart as $key => $item) {
+
+                $itemcart = UserCart::where('userid',$user->id)->where('productid',$item['productid'])->where('producttype',$item['producttype'])->first();
+                if($itemcart == null){
+                    $itemcart = new UserCart;
+                }
+                $itemcart->userid= $user->id;
+                $itemcart->productid =  $item['productid'];
+                $itemcart->producttype =  $item['producttype'];
+                $itemcart->qty =  $item['qty'];
+                $itemcart->price =  $item['price'];
+                $itemcart->save();
+
+
+            } 
+            Session::put('cart',null);
+        }
         return count($cart);
     }
 
@@ -239,11 +280,11 @@ class CartController extends Controller
         $subtotal =0;
         $total =0;
         foreach ($cartData as $key => $item) {
-            if($item['type']=='wheel'){
-                $cartData[$key]['data']=WheelProduct::find($item['id']);
+            if($item['producttype']=='wheel'){
+                $cartData[$key]['data']=WheelProduct::find($item['productid']);
             }
-            if($item['type']=='tire'){
-                $cartData[$key]['data']=Tire::find($item['id']);
+            if($item['producttype']=='tire'){
+                $cartData[$key]['data']=Tire::find($item['productid']);
             } 
             $subtotal+=$cartData[$key]['qty']*$cartData[$key]['data']->price;
         }

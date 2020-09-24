@@ -1491,7 +1491,7 @@
         var productid = $(this).data('productid');
         var price = $(this).data('price');
         // alert(price);
-        var prodtype = 'wheel';
+        var producttype = 'wheel';
         var modalMsg = "Qty: " + qty + ", " + $('.wheel_detail_title').text() + " " + price + "/ea";
 
         $.ajax({
@@ -1499,7 +1499,7 @@
             data: {
                 'qty': qty,
                 'productid': productid,
-                'prodtype': prodtype,
+                'producttype': producttype,
                 'price': price
             },
             success: function(result) {
